@@ -1,0 +1,943 @@
+﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.DTOs.Pay
+@using KonkurCRM.Core.DTOs.Register
+@using KonkurCRM.Core.DTOs.Student
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Calls
+@using KonkurCRM.DataLayer.Entities.Pays
+@using KonkurCRM.DataLayer.Entities.Register
+@model KonkurCRM.DataLayer.Entities.Students.Student
+@inject IRegisterService _registerService
+@inject IStudentService _studentService
+@inject IPlanService _planService
+@inject ICourseService _courseService
+@inject IPayService _payService
+@inject ICallService _callService
+
+@{
+    ViewData["Title"] = "جزئیات دانش آموز";
+
+
+    Register register = _registerService.GetLastRegisterByStudentId(Model.StudentId);
+
+    int lastRegisterId = register.RegisterId;
+
+    List<InformationRegistersAdviserViewModel> infoRegister = _registerService.ShowInformationRegisterByRegisterId(lastRegisterId);
+
+    int firstRegisterId = _studentService.GetStudentsRegisters(Model.StudentId).First().RegisterId;
+
+    List<InformationRegistersAdviserViewModel> firstRegister = _registerService.ShowInformationRegisterByRegisterId(firstRegisterId);
+
+    List<Register> registerStudent = _studentService.GetStudentsRegisters(Model.StudentId).OrderByDescending(r => r.RegisterDate).ToList();
+
+    int position = Convert.ToInt32(ViewData["Position"]);
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_SidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <div class="container">
+        <!-- Title and Top Buttons Start -->
+        <div class="page-title-container">
+            <div class="row">
+                <!-- Title Start -->
+                <div class="col-auto mb-3 mb-md-0 me-auto">
+                    <div class="w-auto sw-md-30">
+                        <a href="/adminpanel/students" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                            <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                            <span class="text-small align-middle">دانش آموزان</span>
+                        </a>
+                        <h1 class="mb-0 pb-0" style="font-size: 1.3rem" id="title">صفحه جزئیات دانش آموز</h1>
+                    </div>
+                </div>
+                <!-- Title End -->
+                <!-- Top Buttons Start -->
+                <div class="col-12 col-md-5 d-flex align-items-end justify-content-end">
+                    <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto">
+                        <i data-cs-icon="save"></i>
+                        <span>Update</span>
+                    </button>
+
+                    <!-- Dropdown Button Start -->
+                    <div class="ms-1">
+                        <button type="button"
+                                class="btn btn-outline-primary btn-icon btn-icon-only"
+                                style="
+                               border-top-right-radius: 0;
+                               border-bottom-right-radius: 0;
+                               border-top-left-radius: var(--border-radius-md);
+                               border-bottom-left-radius: var(--border-radius-md);
+                           "
+                                data-bs-offset="0,3"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-submenu>
+                            <i data-cs-icon="more-horizontal"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <button class="dropdown-item" type="button">Edit</button>
+                            <button class="dropdown-item" type="button">View Purchases</button>
+                            <button class="dropdown-item" type="button">Check Ip</button>
+                        </div>
+                    </div>
+                    <!-- Dropdown Button End -->
+                </div>
+                <!-- Top Buttons End -->
+            </div>
+        </div>
+        <!-- Title and Top Buttons End -->
+
+        <div class="row gx-4 gy-5">
+            <!-- Adviser Start -->
+            <div class="col-12 col-xl-4 col-xxl-3">
+                <h2 class="small-title">جزئیات</h2>
+                <div class="card">
+                    <div class="card-body mb-n5">
+                        <div class="d-flex align-items-center flex-column">
+                            <div class="mb-5 d-flex align-items-center flex-column">
+                                @*<div class="sw-6 sh-6 mb-3 d-inline-block bg-primary d-flex justify-content-center align-items-center rounded-xl">
+                                <div class="text-white">BC</div>
+                                </div>*@
+                                <div class="h3 mb-1">@Model.Name @Model.Family</div>
+                                <div class="text-muted">
+                                    <i data-cs-icon="pin" class="text-muted"></i>
+                                    <span class="align-middle">@Model.City</span>
+                                </div>
+                            </div>
+                        </div>
+                        @if (position == 1)
+                        {
+                            <div class="d-flex justify-content-center">
+                                <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100 mb-5">
+                                    <a class="btn btn-outline-primary w-100 me-2">ویرایش</a>
+                                    <a class="btn btn-outline-danger w-100 me-2" style="border-top-right-radius: 0;border-bottom-right-radius: 0;border-top-left-radius: var(--border-radius-md);border-bottom-left-radius: var(--border-radius-md);" data-bs-toggle="modal" data-bs-target="#DeleteModal">حذف</a>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center" style="margin-top: -25px">
+                                <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100 mb-5">
+                                    <a class="btn btn-outline-warning w-100 me-2" data-bs-toggle="modal" data-bs-target="#CancelModal">انصراف</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-center">
+                                <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100 mb-5">
+                                    <a class="btn btn-outline-primary w-100 me-2">ثبت نام مجدد</a>
+                                </div>
+                            </div>
+                        }
+                        <div class="mb-5">
+                            @foreach (var item in infoRegister)
+                            {
+                                @if (item.AdviserTypeId == 2)
+                                {
+                                    <div class="row g-0 align-items-center mb-2">
+                                        <div class="col-auto">
+                                            <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                                <i data-cs-icon="user" class="text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col ps-3" style="padding-right: .5rem;">
+                                            <div class="row g-0">
+                                                <div class="col">
+                                                    <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">مشاور جذب</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="sh-5 d-flex align-items-center">
+
+                                                        @item.AdviserNameFamily
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (item.AdviserTypeId == 3)
+                                {
+                                    <div class="row g-0 align-items-center mb-2">
+                                        <div class="col-auto">
+                                            <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                                <i data-cs-icon="user" class="text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col ps-3" style="padding-right: .5rem;">
+                                            <div class="row g-0">
+                                                <div class="col">
+                                                    <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">مشاور برنامه ریزی</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="sh-5 d-flex align-items-center">
+
+                                                        @item.AdviserNameFamily
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (item.AdviserTypeId == 4)
+                                {
+                                    <div class="row g-0 align-items-center mb-2">
+                                        <div class="col-auto">
+                                            <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                                <i data-cs-icon="user" class="text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col ps-3" style="padding-right: .5rem;">
+                                            <div class="row g-0">
+                                                <div class="col">
+                                                    <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">مشاور روانشناسی</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="sh-5 d-flex align-items-center">
+
+                                                        @item.AdviserNameFamily
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (item.AdviserTypeId == 5)
+                                {
+                                    <div class="row g-0 align-items-center mb-2">
+                                        <div class="col-auto">
+                                            <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                                                <i data-cs-icon="user" class="text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col ps-3" style="padding-right: .5rem;">
+                                            <div class="row g-0">
+                                                <div class="col">
+                                                    <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">مشاور تغذیه</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="sh-5 d-flex align-items-center">
+
+                                                        @item.AdviserNameFamily
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="mb-5">
+                            <div>
+                                <p class="text-small text-muted mb-2">جزئیات</p>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="user" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate align-middle">@Model.Name @Model.Family</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="user" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate align-middle">@Model.FatherName</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.Mobile1</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.Mobile2</div>
+                                </div>
+
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.Mobile3</div>
+                                </div>
+
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.PhoneNumber</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="book" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">
+                                        @_studentService.GetStudyTitleById(Model.StudyId)
+                                    </div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="database" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">
+                                        @_studentService.GetGradeTitleById(Model.GradeId)
+                                    </div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="pin" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.City</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Adviser End -->
+
+
+
+            <div class="col-12 col-xl-8 col-xxl-9">
+                <!-- Recent Adviser's Student Start -->
+                <!-- Recent Adviser's Student End -->
+                <!-- Activity Start -->
+                <h2 class="small-title">تاریخچه</h2>
+                <div class="card mb-5">
+                    <div class="card-body">
+                        @foreach (var registers in registerStudent)
+                        {
+                            List<InformationRegistersAdviserViewModel> studentRegisters = _registerService.ShowInformationRegisterByRegisterId(registers.RegisterId);
+
+                            List<InformationPayByRegisterViewModel> pays = _registerService.GetPayByRegisterId(registers.RegisterId, registers.AdviserId);
+
+                            List<InformationChequeByRegisterViewModel> cheques = _registerService.GetChequeByRegisterId(registers.RegisterId, registers.AdviserId);
+
+                            string adviserNameFamilyType2 = "";
+                            List<string> adviserNameFamilyType3 = new List<string>();
+                            List<string> adviserNameFamilyType4 = new List<string>();
+                            List<string> adviserNameFamilyType5 = new List<string>();
+
+                            string adviserStartType2 = "";
+                            string adviserEndType2 = "";
+                            List<string> adviserStartType3 = new List<string>();
+                            List<string> adviserEndType3 = new List<string>();
+                            List<string> adviserStartType4 = new List<string>();
+                            List<string> adviserEndType4 = new List<string>();
+                            List<string> adviserStartType5 = new List<string>();
+                            List<string> adviserEndType5 = new List<string>();
+
+                            @foreach (var item in studentRegisters)
+                            {
+                                if (item.AdviserTypeId == 2)
+                                {
+                                    adviserNameFamilyType2 = item.AdviserNameFamily;
+                                    adviserStartType2 = item.StartDate.ToShamsi();
+                                    adviserEndType2 = item.EndDate.ToShamsi();
+                                }
+                                else if (item.AdviserTypeId == 3)
+                                {
+                                    adviserNameFamilyType3.Add(item.AdviserNameFamily);
+                                    adviserStartType3.Add(item.StartDate.ToShamsi());
+                                    adviserEndType3.Add(item.EndDate.ToShamsi());
+                                }
+                                else if (item.AdviserTypeId == 4)
+                                {
+                                    adviserNameFamilyType4.Add(item.AdviserNameFamily);
+                                    adviserStartType4.Add(item.StartDate.ToShamsi());
+                                    adviserEndType4.Add(item.EndDate.ToShamsi());
+                                }
+                                else
+                                {
+                                    adviserNameFamilyType5.Add(item.AdviserNameFamily);
+                                    adviserStartType5.Add(item.StartDate.ToShamsi());
+                                    adviserEndType5.Add(item.EndDate.ToShamsi());
+                                }
+                            }
+
+                            <div class="row g-0">
+                                <div class="col-auto sw-1 d-flex flex-column justify-content-center align-items-center position-relative me-4">
+                                    <div class="w-100 d-flex sh-1"></div>
+                                    <div class="rounded-xl shadow d-flex flex-shrink-0 justify-content-center align-items-center">
+                                        <div class="bg-gradient-primary sw-1 sh-1 rounded-xl position-relative"></div>
+                                    </div>
+                                    <div class="w-100 d-flex h-100 justify-content-center position-relative">
+                                        <div class="line-w-1 bg-separator h-100 position-absolute"></div>
+                                    </div>
+                                </div>
+                                <div class="col mb-4">
+                                    <div class="h-100">
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <div class="d-flex flex-column">
+                                                <a href="#" class="heading stretched-link">ثبت نام در طرح : <span class="text-quaternary">@_planService.GetPlanTitleById(@registers.PlanId)</span> از برنامه ی : <span class="text-quaternary">@_courseService.GetCourseTitleById(@registers.CourseId)</span></a>
+                                                <a href="#" class="heading stretched-link">تخفیف : <span class="text-quaternary">@registers.Discount.ToRial()</span>  هزینه : <span class="text-quaternary">@registers.FinalAmount.ToRial()</span>  نحوه ی پرداخت : <span class="text-quaternary">@_payService.GetPayTypeById(registers.PayTypeId)</span></a>
+                                                <div style="margin-top: .5rem"></div>
+                                                <div class="text-alternate">@adviserStartType2  تا  @adviserEndType2</div>
+                                                <div class="text-muted mt-1">
+                                                    جذب : @adviserNameFamilyType2
+                                                </div>
+                                                @if (adviserNameFamilyType3.Count != 0)
+                                                {
+                                                    for (int i = 0; i < adviserNameFamilyType3.Count; i++)
+                                                    {
+                                                        <div style="margin-top: .5rem"></div>
+                                                        <div class="text-alternate">@adviserStartType3[i]  تا  @adviserEndType3[i]</div>
+                                                        <div class="text-muted mt-1">
+                                                            برنامه ریزی : @adviserNameFamilyType3[i]
+                                                        </div>
+                                                    }
+                                                }
+                                                @if (adviserNameFamilyType4.Count != 0)
+                                                {
+                                                    for (int i = 0; i < adviserNameFamilyType4.Count; i++)
+                                                    {
+                                                        <div style="margin-top: .5rem"></div>
+                                                    <div class="text-alternate">@adviserStartType4[i]  تا  @adviserEndType4[i] </div>
+                                                    <div class="text-muted mt-1">
+                                                        روانشناسی : @adviserNameFamilyType4[i]
+                                                    </div>
+                                                    }
+                                                }
+                                                @if (adviserNameFamilyType5.Count != 0)
+                                                {
+                                                    for (int i = 0; i < adviserNameFamilyType5.Count; i++)
+                                                    {
+                                                        <div style="margin-top: .5rem"></div>
+                                                    <div class="text-alternate">@adviserStartType5[i]  تا  @adviserEndType5[i] </div>
+                                                    <div class="text-muted mt-1">
+                                                        تغذیه : @adviserNameFamilyType5[i]
+                                                    </div>
+                                                    }
+                                                }
+                                                <div style="margin-top: .5rem"></div>
+                                                @if (registers.PayTypeId == 3)
+                                                {
+                                                    <a href="#" class="heading stretched-link">چک ها</a>
+                                                    @foreach (var cheque in cheques)
+                                                    {
+                                                        <div style="margin-top: .5rem"></div>
+                                                        <div class="text-alternate">@cheque.ChequeDate.ToShamsi()</div>
+                                                        @if (cheque.IsPass)
+                                                        {
+                                                            <div class="text-muted mt-1">
+                                                                @cheque.Amount.ToRial() ــــ پاس شده
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="text-muted mt-1">
+                                                                @cheque.Amount.ToRial()  ــــ پاس نشده
+                                                            </div>
+                                                        }
+                                                    }
+                                                    <div style="margin-top: .5rem"></div>
+                                                    <a href="#" class="heading stretched-link">پرداخت ها</a>
+                                                    @foreach (var pay in pays)
+                                                    {
+                                                        <div style="margin-top: .5rem"></div>
+                                                        <div class="text-alternate">@pay.PayDate.ToShamsi() ساعت : @pay.PayDate.ToString("HH:mm")</div>
+                                                        <div class="text-muted mt-1">
+                                                            @pay.Amount.ToRial() ـــ کد پیگیری : @pay.PursuitCode
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" class="heading stretched-link">پرداخت ها</a>
+                                                    @foreach (var pay in pays)
+                                                    {
+                                                        <div style="margin-top: .5rem"></div>
+                                                        <div class="text-alternate">@pay.PayDate.ToShamsi() ساعت : @pay.PayDate.ToString("HH:mm")</div>
+                                                        <div class="text-muted mt-1">
+                                                            @pay.Amount.ToRial() ـــ کد پیگیری : @pay.PursuitCode
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row g-0">
+                            <div class="col-auto sw-1 d-flex flex-column justify-content-center align-items-center position-relative me-4">
+                                <div class="w-100 d-flex sh-1 position-relative justify-content-center">
+                                    <div class="line-w-1 bg-separator h-100 position-absolute"></div>
+                                </div>
+                                <div class="rounded-xl shadow d-flex flex-shrink-0 justify-content-center align-items-center">
+                                    <div class="bg-gradient-primary sw-1 sh-1 rounded-xl position-relative"></div>
+                                </div>
+                                <div class="w-100 d-flex h-100 justify-content-center position-relative"></div>
+                            </div>
+                            <div class="col">
+                                <div class="h-100">
+                                    <div class="d-flex flex-column justify-content-start">
+                                        <div class="d-flex flex-column">
+                                            <a href="#" class="heading stretched-link">اولین تماس</a>
+                                            @foreach (var f in firstRegister)
+                                            {
+                                                @if (f.AdviserTypeId == 2)
+                                                {
+                                                    <div class="text-alternate">
+                                                        @f.StartDate.ToShamsi()
+                                                    </div>
+                                                    <div class="text-muted mt-1">
+
+                                                        @f.AdviserNameFamily
+
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Activity End -->
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="col-12 row" style="margin-top: 3rem">
+        <!-- Student Pays Start-->
+
+        <div class="col-6">
+            <div class="text-center text-quaternary" style="margin-bottom: 2rem">پرداخت ها</div>
+            <div class="student-pay-container">
+                <div class="mb-n2 scroll-out">
+                    <div class="scroll-by-count" data-count="5">
+                        <div class="col-12">
+                            <div class="row g-0 h-100 align-content-center">
+                                <div class="row g-0 h-100 align-content-center justify-content-center">
+                                    <div style="height: 75px" class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        تاریخ
+                                    </div>
+                                    <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        ساعت
+                                    </div>
+                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        مبلغ
+                                    </div>
+                                    <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        کد پیگیری
+                                    </div>
+                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        توضیحات
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @foreach (var registers in registerStudent)
+                                {
+                                    List<InformationRegistersAdviserViewModel> studentRegisters = _registerService.ShowInformationRegisterByRegisterId(registers.RegisterId);
+
+                                    List<InformationPayByRegisterViewModel> pays = _registerService.GetPayByRegisterId(registers.RegisterId, registers.AdviserId);
+
+
+                                    @foreach (var pay in pays)
+                                    {
+                                        <div class="card mb-2">
+                                            <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                                <div class="row g-0 h-100 align-content-center">
+
+
+                                                    <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                        <div class="text-muted text-small d-md-none">Id</div>
+                                                        <div class="text-alternate">
+                                                            @pay.PayDate.ToShamsi()
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                        <div class="text-muted text-small d-md-none">Id</div>
+                                                        <div class="text-alternate">
+                                                            @pay.PayDate.ToString("HH:mm")
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                        <div class="text-muted text-small d-md-none">Id</div>
+                                                        <div class="text-alternate">
+                                                            @pay.Amount.ToRial()
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                        <div class="text-muted text-small d-md-none">Id</div>
+                                                        <div class="text-alternate">
+                                                            @pay.PursuitCode
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                        <div class="text-muted text-small d-md-none">Id</div>
+                                                        <div class="text-alternate">
+                                                            @pay.Description
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Pays End-->
+        <!-- Student Cheque/Installment Start-->
+        <div class="col-6">
+            <div class="text-center text-quaternary" style="margin-bottom: 2rem">اقساط / چک ها</div>
+            <div class="student-installment-container">
+                <div class="mb-n2 scroll-out">
+                    <div class="scroll-by-count" data-count="5">
+                        <div class="col-12">
+                            <div class="row g-0 h-100 align-content-center">
+                                <div class="row g-0 h-100 align-content-center justify-content-center">
+                                    <div style="height: 75px" class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        نوع
+                                    </div>
+                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        تاریخ
+                                    </div>
+                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        مبلغ
+                                    </div>
+                                    <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                        وضعیت
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @foreach (var registers in registerStudent)
+                                {
+                                    List<InformationRegistersAdviserViewModel> studentRegisters = _registerService.ShowInformationRegisterByRegisterId(registers.RegisterId);
+
+                                    List<InformationChequeByRegisterViewModel> cheques = _registerService.GetChequeByRegisterId(registers.RegisterId, registers.AdviserId);
+
+                                    List<Installment> installments = _registerService.GetInstallmentByRegisterId(registers.RegisterId);
+
+
+                                    @if (registers.PayTypeId == 2)
+                                    {
+
+                                        foreach (var installment in installments)
+                                        {
+                                            <div class="card mb-2">
+                                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+                                                    <div class="row g-0 h-100 align-content-center">
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                قسط
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                @installment.InstallmentDate.ToShamsi()
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                @installment.Amount.ToRial()
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            @if (installment.IsPayed)
+                                                            {
+                                                                <div class="text-alternate">
+                                                                    پرداخت شده
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-alternate">
+                                                                    پرداخت نشده
+                                                                </div>
+                                                            }
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else if (registers.PayTypeId == 3)
+                                    {
+                                        foreach (var cheque in cheques)
+                                        {
+                                            <div class="card mb-2">
+                                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+                                                    <div class="row g-0 h-100 align-content-center">
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                چک
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                @cheque.ChequeDate.ToShamsi()
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                @cheque.Amount.ToRial()
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            @if (cheque.IsPass)
+                                                            {
+                                                                <div class="text-alternate">
+                                                                    پاس شده
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-alternate">
+                                                                    پاس نشده
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Cheque/Installment End-->
+
+    </div>
+
+    <div class="row col-12" style="margin-top: 3rem">
+
+        <!-- Student Calls Start -->
+        <div class="row col-12 justify-content-center">
+            <div class="col-12">
+                <div class="text-center text-quaternary" style="margin-bottom: 2rem">تاریخچه تماس ها</div>
+                <div class="mb-n2 scroll-out">
+                    <div class="scroll-by-count" data-count="3">
+                        <div>
+                            <div class="col-12">
+                                <div class="row g-0 h-100 align-content-center">
+                                    <div class="row g-0 h-100 align-content-center justify-content-center">
+                                        <div style="height: 75px" class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            تاریخ
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            مدت تماس
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            موضوع
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            توضیحات
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            نوع
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    @foreach (var registers in registerStudent)
+                                    {
+                                        List<Call> calls = _callService.GetCallByRegisterId(registers.RegisterId);
+
+                                        <div class="card mb-2">
+                                            <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                                <div class="row g-0 h-100 align-content-center">
+                                                    @foreach (var call in calls)
+                                                    {
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                @call.CallDate.ToShamsi()
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                            <div class="text-muted text-small d-md-none">Id</div>
+                                                            <div class="text-alternate">
+                                                                @call.CallTime
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                            <div class="text-muted text-small d-md-none">Date</div>
+                                                            <div class="text-alternate">
+                                                                @call.Subject
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                            <div class="text-muted text-small d-md-none">Date</div>
+                                                            <div class="text-alternate">
+                                                                @call.Description
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                            <div class="text-muted text-small d-md-none">Date</div>
+                                                            @if (call.IsCall)
+                                                            {
+                                                                <div class="text-danger">
+                                                                    تماس
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-primary">
+                                                                    پیام
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Student Calls End -->
+
+    </div>
+
+    <!-- Modal Delete Student Start-->
+    <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabelDefault" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteModalLabelDefault">حذف دانش آموز</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <!-- <i data-cs-icon="close"></i> -->
+                    </button>
+                </div>
+                <div class="modal-body">
+                    آیا از حذف <span class="text-primary">@Model.Name @Model.Family</span> اطمینان دارید ؟!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-danger" onclick="DeleteStudent(@Model.StudentId)">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete Student End-->
+    <!-- Modal Cancel Student Start-->
+    <div class="modal fade" id="CancelModal" tabindex="-1" aria-labelledby="exampleModalLabelDefault" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CancelModalLabelDefault">انصراف دانش آموز</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <!-- <i data-cs-icon="close"></i> -->
+                    </button>
+                </div>
+                <div class="modal-body">
+                    آیا از انصراف <span class="text-primary">@Model.Name @Model.Family</span> اطمینان دارید ؟!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-danger" onclick="CancelStudent(@Model.StudentId)">ثبت انصراف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Cancel Student End-->
+</main>
+
+<script>
+    $(document).ready(function() {
+
+    });
+
+    function DeleteStudent(id) {
+        $.ajax({
+            url: "/AdminPanel/DeleteStudent/" + id,
+            type: "Get"
+        }).done(function(result) {
+            location.replace("/AdminPanel/DeletedStudents/");
+        });
+    }
+
+    function CancelStudent(id) {
+        $.ajax({
+            url: "/AdminPanel/CancelStudent/" + id,
+            type: "Get"
+        }).done(function(result) {
+            location.replace("/AdminPanel/CanceledStudents/");
+        });
+    }
+</script>

@@ -1,0 +1,67 @@
+﻿@model KonkurCRM.Core.DTOs.Student.EditStudentViewModel
+
+@{
+    ViewData["Title"] = "ویرایش دانش آموز";
+}
+
+<main class="main">
+    <form method="post" asp-action="EditStudent">
+        <input type="hidden" asp-for="StudentId" value="@Model.StudentId"/>
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button id="btnSave" type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">ویرایش دانش آموز</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="Name" placeholder="نام (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="Family" placeholder="نام خانوادگی (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input class="form-control" asp-for="FatherName" placeholder="نام پدر (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Mobile1" placeholder="موبایل دانش آموز">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Mobile2" placeholder="موبایل پدر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Mobile3" placeholder="موبایل مادر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="PhoneNumber" placeholder="تلفن ثابت">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="City" placeholder="شهر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <select id="sStudy" class="form-control" asp-for="StudyId" asp-items="@(ViewData["study"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <select id="sGrade" class="form-control" asp-for="GradeId" asp-items="@(ViewData["grade"] as SelectList)"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+

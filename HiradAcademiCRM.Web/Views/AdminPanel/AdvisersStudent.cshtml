@@ -1,0 +1,453 @@
+﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.DTOs.Register
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Advisers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model RegisterViewModel
+@inject IRegisterService _registerService
+@inject IAdviserService _adviserService
+
+@{
+    ViewData["Title"] = "دانش آموزان این مشاور";
+
+    int adviserId = Convert.ToInt32(ViewData["AdviserId"]);
+
+    Adviser adviser = _adviserService.GetAdviserById(adviserId);
+
+    List<string> list = _adviserService.GroupAdviserTilte(adviserId);
+    List<int> listGroupId = _adviserService.GetAdvisersGroup(adviserId);
+}
+
+<div id="root">
+    <div id="nav" class="nav-container d-flex">
+        <div class="nav-content d-flex">
+            <!-- Logo Start -->
+            <partial name="_Logo" />
+            <!-- Logo End -->
+            <!-- User Menu Start -->
+            <partial name="_SidebarUserMenu" />
+            <!-- User Menu End -->
+            <!-- Icons Menu Start -->
+            <partial name="_SidebarIconMenu" />
+            <!-- Icons Menu End -->
+            <!-- Menu Start -->
+            <partial name="_SidebarMenu" />
+            <!-- Menu End -->
+            <!-- Mobile Buttons Start -->
+            <div class="mobile-buttons-container">
+                <!-- Menu Button Start -->
+                <a href="#" id="mobileMenuButton" class="menu-button">
+                    <i data-cs-icon="menu"></i>
+                </a>
+                <!-- Menu Button End -->
+            </div>
+            <!-- Mobile Buttons End -->
+        </div>
+        <div class="nav-shadow"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <!-- Title and Top Buttons Start -->
+            <div class="page-title-container">
+                <div class="row">
+                    <!-- Title Start -->
+                    <div class="col-auto mb-3 mb-md-0 me-auto">
+                        <div class="w-auto sw-md-30">
+                            <a href="/AdminPanel/AdviserDetail/@adviserId" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                                <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                                <span class="text-small align-middle">جزئیات مشاور</span>
+                            </a>
+                            <h1 class="mb-0 pb-0 display-4" id="title">لیست دانش آموزان @adviser.Name @adviser.Family</h1>
+                        </div>
+                    </div>
+                    <!-- Title End -->
+                </div>
+            </div>
+            <!-- Title and Top Buttons End -->
+            <!-- Controls Start -->
+            <div class="row mb-2">
+                <!-- Search Start -->
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtFamily" class="form-control" name="family" placeholder="نام خانوادگی" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <select id="sCourse" class="form-control" name="courseId" asp-items="@(ViewData["courses"] as SelectList)"></select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <select id="sPlan" class="form-control" name="planId" asp-items="@(ViewData["plans"] as SelectList)"></select>
+                    </div>
+                </div>
+                <!-- Search End -->
+
+            </div>
+            <!-- Controls End -->
+        <!-- Customers List Start -->
+        <div class="d-flex justify-content-between">
+            @if (listGroupId.Count > 1 && list.Contains("جذب"))
+            {
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">نمایش جذب</label>
+                </div>
+            }
+        </div>
+        @if (listGroupId.Count == 1 && list.Contains("جذب"))
+        {
+            <div>
+                <div class="col-12 mb-5">
+                    <div class="row g-0 h-100 align-content-center">
+                        <div class="row g-0 h-100 align-content-center justify-content-center">
+                            <div style="height: 75px" class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                دانش آموز
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                برنامه
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                طرح
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                هزینه
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                نحوه پرداخت
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-container">
+                        @foreach (var item in Model.InformationRegister)
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                            <div class="text-muted text-small d-md-none">Id</div>
+                                            <a href="/adminpanel/studentDetail/@item.StudentId" class="text-truncate h-100 d-flex align-items-center">@item.StudentNameFamily</a>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@item.CourseTitle</div>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-secondary">@item.PlanTitle</div>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@item.FinalAmount.ToRial()</div>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0 align-items-md-end">
+                                            <div class="text-muted text-small d-md-none">Status</div>
+                                            <div class="text-alternate">
+                                                @if (item.PayTypeId == 1)
+                                                {
+                                                    <span class="badge rounded-pill bg-outline-primary">@item.PayTypeTitle</span>
+                                                }
+                                                else if (item.PayTypeId == 2)
+                                                {
+                                                    <span class="badge rounded-pill bg-outline-secondary">@item.PayTypeTitle</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge rounded-pill bg-outline-tertiary">@item.PayTypeTitle</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+                        @{
+                            Model.PageCount = (int)Math.Ceiling((decimal)Model.InformationRegister.Count() / 10);
+                        }
+
+                        <partial name="_PaginationPages"/>
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+        }
+        else if (!list.Contains("جذب"))
+        {
+            <div>
+                <div class="col-12 mb-5">
+                    <div class="row g-0 h-100 align-content-center">
+                        <div class="row g-0 h-100 align-content-center justify-content-center">
+                            <div style="height: 75px" class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                دانش آموز
+                            </div>
+                            <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                گروه مشاور
+                            </div>
+                            <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                تاریخ شروع
+                            </div>
+                            <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                تاریخ اتمام
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-container">
+                        @foreach (var info in Model.InformationAdvisersRegister)
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                            <div class="text-muted text-small d-md-none">Id</div>
+                                            <a href="/adminpanel/studentDetail/@info.StudentId" class="text-truncate h-100 d-flex align-items-center">@info.StudentNameFamily</a>
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@info.Type</div>
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-secondary">@info.StartDate.ToShamsi()</div>
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@info.EndDate.ToShamsi()</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+                        
+                        @{
+                            Model.PageCount = (int)Math.Ceiling((decimal)Model.InformationAdvisersRegister.Count() / 10);
+                        }
+                        
+                        <partial name="_PaginationPages"/>
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="isVendor" hidden="false">
+                <div class="col-12 mb-5">
+                    <div class="row g-0 h-100 align-content-center">
+                        <div class="row g-0 h-100 align-content-center justify-content-center">
+                            <div style="height: 75px" class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                دانش آموز
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                برنامه
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                طرح
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                هزینه
+                            </div>
+                            <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                نحوه پرداخت
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-container">
+                        @foreach (var item in Model.InformationRegister)
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                            <div class="text-muted text-small d-md-none">Id</div>
+                                            <a href="/adminpanel/studentDetail/@item.StudentId" class="text-truncate h-100 d-flex align-items-center">@item.StudentNameFamily</a>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@item.CourseTitle</div>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-secondary">@item.PlanTitle</div>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@item.FinalAmount.ToRial()</div>
+                                        </div>
+                                        <div class="col-6 col-md-2 d-flex flex-column justify-content-center mb-2 mb-md-0 align-items-md-end">
+                                            <div class="text-muted text-small d-md-none">Status</div>
+                                            <div class="text-alternate">
+                                                @if (item.PayTypeId == 1)
+                                                {
+                                                    <span class="badge rounded-pill bg-outline-primary">@item.PayTypeTitle</span>
+                                                }
+                                                else if (item.PayTypeId == 2)
+                                                {
+                                                    <span class="badge rounded-pill bg-outline-secondary">@item.PayTypeTitle</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge rounded-pill bg-outline-tertiary">@item.PayTypeTitle</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+                        
+                        @{
+                            Model.PageCount = (int)Math.Ceiling((decimal)Model.InformationRegister.Count() / 10);
+                        }
+
+                        <partial name="_PaginationPages"/>
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+            <div id="isNotVendor" hidden="true">
+                <div class="col-12 mb-5">
+                    <div class="row g-0 h-100 align-content-center">
+                        <div class="row g-0 h-100 align-content-center justify-content-center">
+                            <div style="height: 75px" class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                دانش آموز
+                            </div>
+                            <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                گروه مشاور
+                            </div>
+                            <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                تاریخ شروع
+                            </div>
+                            <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                تاریخ اتمام
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-container">
+                        @foreach (var info in Model.InformationAdvisersRegister)
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                            <div class="text-muted text-small d-md-none">Id</div>
+                                            <a href="/adminpanel/studentDetail/@info.StudentId" class="text-truncate h-100 d-flex align-items-center">@info.StudentNameFamily</a>
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@info.Type</div>
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-secondary">@info.StartDate.ToShamsi()</div>
+                                        </div>
+                                        <div class="col-6 col-md-3 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                            <div class="text-muted text-small d-md-none">Date</div>
+                                            <div class="text-alternate">@info.EndDate.ToShamsi()</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+                        
+                        @{
+                            Model.PageCount = (int)Math.Ceiling((decimal)Model.InformationAdvisersRegister.Count() / 10);
+                        }
+                        
+                        <partial name="_PaginationPages"/>
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- Customers List End -->
+        </div>
+    </main>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+
+        const body = $("body");
+
+        const pagination = [
+            { selector : '.pagination a#aPage', pageId : 'this' },
+            { selector : '.pagination a#aFirstPage', pageId :'1' },
+            { selector : '.pagination a#aPreviousPage', pageId : Number($('#currentPage').text()) - 1 },
+            { selector : '.pagination a#aNextPage', pageId : Number($('#currentPage').text()) + 1 },
+            { selector : '.pagination a#aLastPage', pageId :  $('#pageCount').text() }
+        ];
+
+        for (let page of pagination) {
+
+            body.on('click', page.selector, function (e) {
+
+                e.preventDefault();
+                let pageId = page.pageId === 'this' ? $(this).text() : page.pageId;
+                initAjaxFilterData(event ,pageId);
+
+            }); }
+
+        function initAjaxFilterData(event ,pageID) {
+            args = {
+                'ajax_url': "@Url.Action("AdvisersStudent")",
+                'find': '.show-container',
+                'data': {
+                    'family': $('#txtFamily').val(),
+                    'planId': $('#sPlan').val(),
+                    'courseId': $('#sCourse').val()
+                },
+            };
+            if (typeof pageID != 'undefined') {
+                args.data.pageId = pageID;
+            }
+
+            $(document.body).trigger('run_ajax_filter', [args]);
+        }
+
+        $(".form-control").on('input', initAjaxFilterData);
+
+
+        $('#isVendor').attr("hidden", false);
+        $('#flexSwitchCheckChecked').prop('checked', true);
+
+        $('#flexSwitchCheckChecked').change(function() {
+
+            let isChecked = $('#flexSwitchCheckChecked').is(':checked');
+            if (isChecked) {
+                $('#isVendor').attr("hidden", false);
+                $('#isNotVendor').attr("hidden", true);
+            } else {
+                $('#isVendor').attr("hidden", true);
+                $('#isNotVendor').attr("hidden", false);
+            }
+        });
+
+        $('#sPlan').select2();
+        $('#sCourse').select2();
+    });
+</script>
+

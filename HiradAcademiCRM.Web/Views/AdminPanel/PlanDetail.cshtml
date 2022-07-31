@@ -1,0 +1,471 @@
+﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.DTOs.Register
+@using KonkurCRM.Core.Generator
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Advisers
+@model KonkurCRM.DataLayer.Entities.Plans.Plan
+@inject IRegisterService _registerService
+@inject ISettingsService _settingsService
+@inject IAdviserService _adviserService
+
+@{
+    ViewData["Title"] = "جزئیات طرح";
+
+    int rangeDate = Convert.ToInt32(ViewData["RangeDate"]);
+
+    List<InformationAdvisersRegisterViewModel> registerByPlan = _registerService.GetRegisterByPlanId(Model.PlanId).Where(r => r.AdviserTypeId == 2).OrderByDescending(r=>r.StartDate).ToList();
+
+    GenerateDate generate = new GenerateDate();
+    int startDay = _settingsService.GetStartDayOfMonth();
+    DateTime startDate = generate.GetStartDayOfMonth(startDay);
+    DateTime endDate = generate.GetEndDateOfMonth(startDate);
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_SidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+<div class="container">
+<!-- Title and Top Buttons Start -->
+<div class="page-title-container">
+    <div class="row">
+        <!-- Title Start -->
+        <div class="col-auto mb-3 mb-md-0 me-auto">
+            <div class="w-auto sw-md-30">
+                <a href="/adminpanel/plans" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                    <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                    <span class="text-small align-middle">طرح ها</span>
+                </a>
+                <h1 class="mb-0 pb-0 display-4" id="title">صفحه جزئیات طرح</h1>
+            </div>
+        </div>
+        <!-- Title End -->
+        <!-- Top Buttons Start -->
+        <div class="col-12 col-md-5 d-flex align-items-end justify-content-end">
+            <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto">
+                <i data-cs-icon="save"></i>
+                <span>Update</span>
+            </button>
+
+            <!-- Dropdown Button Start -->
+            <div class="ms-1">
+                <button type="button"
+                        class="btn btn-outline-primary btn-icon btn-icon-only"
+                        style="
+                               border-top-right-radius: 0;
+                               border-bottom-right-radius: 0;
+                               border-top-left-radius: var(--border-radius-md);
+                               border-bottom-left-radius: var(--border-radius-md);
+                           "
+                        data-bs-offset="0,3"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        data-submenu>
+                    <i data-cs-icon="more-horizontal"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <button class="dropdown-item" type="button">Edit</button>
+                    <button class="dropdown-item" type="button">View Purchases</button>
+                    <button class="dropdown-item" type="button">Check Ip</button>
+                </div>
+            </div>
+            <!-- Dropdown Button End -->
+        </div>
+        <!-- Top Buttons End -->
+    </div>
+</div>
+<!-- Title and Top Buttons End -->
+
+<div class="row gx-4 gy-5">
+<!-- Course Start -->
+<div class="col-12 col-xl-4 col-xxl-3">
+    <h2 class="small-title">جزئیات</h2>
+    <div class="card">
+        <div class="card-body mb-n5">
+            <div class="d-flex align-items-center flex-column">
+                <div class="mb-5 d-flex align-items-center flex-column">
+                    <div class="h3 mb-1">@Model.PlanTitle</div>
+                    <div class="text-muted">
+                        <i data-cs-icon="calendar" class="text-muted"></i>
+                        <span class="align-middle">@Model.Length ماه</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100 mb-5">
+                    <a href="/adminPanel/EditPlan/@Model.PlanId" class="btn btn-outline-primary w-100 me-2">ویرایش</a>
+                    <button type="button" class="btn btn-outline-danger w-100 me-2" style="border-top-right-radius: 0;border-bottom-right-radius: 0;border-top-left-radius: var(--border-radius-md);border-bottom-left-radius: var(--border-radius-md);" data-bs-toggle="modal" data-bs-target="#exampleModal">حذف</button>
+                </div>
+            </div>
+            <div class="mb-5">
+                <div class="row g-0 align-items-center mb-2">
+                    <div class="col-auto">
+                        <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                            <i data-cs-icon="money" class="text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col ps-3" style="padding-right: .5rem;">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">واریزی این ماه</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="sh-5 d-flex align-items-center">
+                                    @_registerService.GetSumAmountPayPlanForLastMonth(Model.PlanId).ToRial()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-0 align-items-center mb-2">
+                    <div class="col-auto">
+                        <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                            <i data-cs-icon="dollar" class="text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col ps-3" style="padding-right: .5rem;">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">واریزی کل</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="sh-5 d-flex align-items-center">
+                                    @_registerService.GetTotalSumAmountPayPlan(Model.PlanId).ToRial()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-0 align-items-center mb-2">
+                    <div class="col-auto">
+                        <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                            <i data-cs-icon="user" class="text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col ps-3" style="padding-right: .5rem;">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">دانش آموزان این ماه</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="sh-5 d-flex align-items-center">
+                                    @registerByPlan.Count(r=>r.StartDate.Date >= startDate.Date && r.StartDate.Date <= endDate.Date)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-0 align-items-center mb-2">
+                    <div class="col-auto">
+                        <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                            <i data-cs-icon="user-check" class="text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col ps-3" style="padding-right: .5rem;">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="p mb-0 sh-5 d-flex align-items-center lh-1-25">دانش آموزان کل</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="sh-5 d-flex align-items-center">
+                                    @registerByPlan.Count
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-5">
+                <div>
+                    <p class="text-small text-muted mb-2">جزئیات</p>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 me-1">
+                                <i data-cs-icon="money" class="text-primary" data-cs-size="17"></i>
+                            </div>
+                        </div>
+                        <div class="col text-alternate">@Model.Amount.ToRial()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Course End -->
+
+<div class="col-12 col-xl-8 col-xxl-9">
+    <!-- Recent Course's Register Start -->
+    <input type="hidden" id="txtPlanId" value="@Model.PlanId"/>
+    <div class="d-flex justify-content-between">
+        <h2 class="small-title">واریزی های این طرح</h2>
+        <div class="dropdown-as-select me-3" data-setActive="false" data-childSelector="span">
+            <a style="font-size: 18px" class="pe-0 pt-0 align-top lh-1 dropdown-toggle" href="#" data-bs-toggle="dropdown"
+               aria-expanded="false" aria-haspopup="true">
+                <span class="small-title"></span>
+            </a>
+            <div class="dropdown-menu font-standard">
+                <div class="nav flex-column" role="tablist">
+                    <a id="sAll" class="active dropdown-item text-medium" href="#" aria-selected="true" role="tab">همه</a>
+                    <a id="sToday" class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">امروز</a>
+                    <a id="sThisMonth" class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">ماه جاری</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="mb-n2 scroll-out">
+            <div class="scroll-by-count" data-count="15">
+                <div class="col-12 mb-5">
+
+                    <div class="row g-0 h-100 align-content-center">
+                        <div class="row g-0 h-100 align-content-center justify-content-center">
+                            <div style="height: 75px" class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                مشاور
+                            </div>
+                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                تاریخ ثبت نام
+                            </div>
+                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                دانش آموز
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plan-container">
+                        @if (rangeDate == 1)
+                        {
+                            @foreach (var item in registerByPlan)
+                            {
+                                Adviser adviser = _adviserService.GetAdviserById(item.AdviserId);
+                                <div class="card mb-2">
+                                    <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                        <div class="row g-0 h-100 align-content-center">
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                <div class="text-muted text-small d-md-none">Id</div>
+                                                <a href="/adminpanel/AdviserDetail/@item.AdviserId" class="text-truncate h-100 d-flex align-items-center">@adviser.Name @adviser.Family</a>
+                                            </div>
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                <div class="text-muted text-small d-md-none">Date</div>
+                                                <div class="text-alternate">@item.StartDate.ToShamsi()</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                <div class="text-muted text-small d-md-none">Date</div>
+                                                <a href="/adminpanel/StudentDetail/@item.StudentId" class="text-secondary">@item.StudentNameFamily</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else if (rangeDate == 2)
+                        {
+                            @foreach (var item in registerByPlan)
+                            {
+                                Adviser adviser = _adviserService.GetAdviserById(item.AdviserId);
+                                <div class="card mb-2">
+                                    <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                        <div class="row g-0 h-100 align-content-center">
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                <div class="text-muted text-small d-md-none">Id</div>
+                                                <a href="/adminpanel/AdviserDetail/@item.AdviserId" class="text-truncate h-100 d-flex align-items-center">@adviser.Name @adviser.Family</a>
+                                            </div>
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                <div class="text-muted text-small d-md-none">Date</div>
+                                                <div class="text-alternate">@item.StartDate.ToShamsi()</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                <div class="text-muted text-small d-md-none">Date</div>
+                                                <a href="/adminpanel/StudentDetail/@item.StudentId" class="text-secondary">@item.StudentNameFamily</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            @foreach (var item in registerByPlan)
+                            {
+                                Adviser adviser = _adviserService.GetAdviserById(item.AdviserId);
+                                <div class="card mb-2">
+                                    <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                        <div class="row g-0 h-100 align-content-center">
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0 h-md-100">
+                                                <div class="text-muted text-small d-md-none">Id</div>
+                                                <a href="/adminpanel/AdviserDetail/@item.AdviserId" class="text-truncate h-100 d-flex align-items-center">@adviser.Name @adviser.Family</a>
+                                            </div>
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                <div class="text-muted text-small d-md-none">Date</div>
+                                                <div class="text-alternate">@item.StartDate.ToShamsi()</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 d-flex flex-column justify-content-center mb-2 mb-md-0">
+                                                <div class="text-muted text-small d-md-none">Date</div>
+                                                <a href="/adminpanel/StudentDetail/@item.StudentId" class="text-secondary">@item.StudentNameFamily</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Recent Course's Register End -->
+</div>
+</div>
+</div>
+<!-- Modal Delete Plan Start-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabelDefault" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelDefault">حذف مشاور</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <!-- <i data-cs-icon="close"></i> -->
+                </button>
+            </div>
+            <div class="modal-body">
+                آیا از حذف <span class="text-primary">@Model.PlanTitle</span> اطمینان دارید ؟!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-danger" onclick="DeletePlan(@Model.PlanId)">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Delete Plan End-->
+</main>
+
+<script>
+
+    $(document).ready(function() {
+
+        var txtPlanId = $('#txtPlanId').val();
+
+        $("#sAll").on('click',
+            function() {
+
+                txtPlanId = Number($(this).val());
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PlanDetail")",
+                    dataType: "text",
+                    data: {
+                        id: txtPlanId,
+                        rangeDate: 1
+                    },
+                    success: function(res) {
+
+                        console.log(res);
+                        var result = $(res).find('.plan-container');
+
+                        $('.plan-container').replaceWith(result);
+                    },
+                    error: function(req, status, error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+
+        $("#sToday").on('click',
+            function() {
+
+                txtPlanId = Number($(this).val());
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PlanDetail")",
+                    dataType: "text",
+                    data: {
+                        id: txtPlanId,
+                        rangeDate: 2
+                    },
+                    success: function(res) {
+
+                        console.log(res);
+                        var result = $(res).find('.plan-container');
+
+                        $('.plan-container').replaceWith(result);
+                    },
+                    error: function(req, status, error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+
+        $("#sThisMonth").on('click',
+            function() {
+
+                txtPlanId = Number($(this).val());
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PlanDetail")",
+                    dataType: "text",
+                    data: {
+                        id: txtPlanId,
+                        rangeDate: 3
+                    },
+                    success: function(res) {
+
+                        console.log(res);
+                        var result = $(res).find('.plan-container');
+
+                        $('.plan-container').replaceWith(result);
+                    },
+                    error: function(req, status, error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+
+    });
+
+    function DeletePlan(id) {
+        $.ajax({
+            url: "/AdminPanel/DeletePlan/" + id,
+            type: "Get"
+        }).done(function (result) {
+            location.replace("/AdminPanel/Plans/");
+        });
+    }
+
+</script>
+

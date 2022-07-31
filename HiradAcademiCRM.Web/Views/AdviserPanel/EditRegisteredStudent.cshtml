@@ -1,0 +1,269 @@
+﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Plans
+@model KonkurCRM.Core.DTOs.Student.EditStudentAndRegisterComplexViewModel
+@inject IPlanService _PlanService
+
+@{
+    ViewData["Title"] = "ویرایش دانش آموز";
+
+    Plan plan = _PlanService.GetPlanById(Model.EditRegister.PlanId);
+    string planAmountString = plan.Amount.ToRial();
+    int planAmountInt = plan.Amount;
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_AdviserSidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main class="main">
+    <form method="post" asp-action="EditRegisteredStudent">
+        <input type="hidden" asp-for="EditStudent.StudentId" value="@Model.EditStudent.StudentId"/>
+        <input type="hidden" asp-for="EditRegister.RegisterId" value="@Model.EditRegister.RegisterId"/>
+        <input type="hidden" asp-for="EditRegister.AdviserId" value="@Model.EditRegister.AdviserId"/>
+        <input type="hidden" asp-for="EditRegister.StudentId" value="@Model.EditRegister.StudentId"/>
+        <input type="hidden" asp-for="RegisterSAdviser.RAId" value="@Model.RegisterSAdviser.RAId"/>
+        <input type="hidden" asp-for="RegisterSAdviser.RegisterId" value="@Model.RegisterSAdviser.RegisterId"/>
+        <input type="hidden" asp-for="RegisterSAdviser.AdviserId" value="@Model.RegisterSAdviser.AdviserId"/>
+        <input type="hidden" asp-for="RegisterSAdviser.AdviserTypeId" value="@Model.RegisterSAdviser.AdviserTypeId"/>
+        <input type="hidden" asp-for="RegisterSAdviser.IsActive" value="@Model.RegisterSAdviser.IsActive"/>
+        <input type="hidden" asp-for="RegisterSAdviser.StartDate" value="@Model.RegisterSAdviser.StartDate"/>
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button id="btnSave" type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">ویرایش دانش آموز</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.Name" placeholder="نام (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.Family" placeholder="نام خانوادگی (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.FatherName" placeholder="نام پدر (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.Mobile1" placeholder="موبایل دانش آموز">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.Mobile2" placeholder="موبایل پدر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.Mobile3" placeholder="موبایل مادر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.PhoneNumber" placeholder="تلفن ثابت">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="EditStudent.City" placeholder="شهر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <select id="sStudy" class="form-control" asp-for="EditStudent.StudyId"  asp-items="@(ViewData["study"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <select id="sGrade" class="form-control" asp-for="EditStudent.GradeId"  asp-items="@(ViewData["grade"] as SelectList)"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem; margin-top: 2rem">ویرایش ثبت نام</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sPlan" class="form-control select2" asp-for="EditRegister.PlanId" asp-items="@(ViewData["plans"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sCourse" class="form-control select2" asp-for="EditRegister.CourseId" asp-items="@(ViewData["courses"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input type="datetime" class="form-control" asp-for="EditRegister.RegisterDate" value="@Model.EditRegister.RegisterDate.ToShamsi()" placeholder="تاریخ ثبت نام">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input type="datetime" class="form-control" asp-for="RegisterSAdviser.EndDate" value="@Model.RegisterSAdviser.EndDate.ToShamsi()" placeholder="تاریخ پایان قرارداد">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input type="hidden" value="@planAmountInt" id="PlanAmount" class="form-control"/>
+                            <input id="txtPlanAmount" value="@planAmountString" class="form-control" disabled/>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            @*<input id="Discount" value="@Model.EditRegister.Discount.ToString("#,0")" onkeyup="separateNum(this.value, this);" onblur="minusInput()" class="form-control" placeholder="تخفیف">*@
+                            <input type="hidden" id="FinalDiscount" asp-for="EditRegister.Discount">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            @*<input id="FinalAmount" value="@Model.EditRegister.FinalAmount.ToString("#,0")" class="form-control" placeholder="مبلغ نهایی" disabled>*@
+                            <input type="hidden" asp-for="EditRegister.FinalAmount" id="FinalAmountFor"/>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sPayType" class="form-control select2" asp-for="EditRegister.PayTypeId" asp-items="@(ViewData["payTypes"] as SelectList)"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript">
+
+    function separateNum(value, input) {
+        /* seprate number input 3 number */
+        var nStr = value + '';
+        nStr = nStr.replace(/\,/g, "");
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        if (input !== undefined) {
+
+            input.value = x1 + x2;
+        } else {
+            return x1 + x2;
+        }
+    }
+
+
+    //function minusInput() {
+
+        
+    //    var myInput = $("#Discount");
+    //    var inputValue = myInput.val();
+
+    //    inputValue = inputValue.replace(/,\s?/g, "");
+        
+
+    //    var finalPlanAmount = parseInt(document.getElementById('PlanAmount').value);
+
+    //    console.log(finalPlanAmount);
+    //    console.log(inputValue);
+
+    //    var minus = finalPlanAmount - inputValue;
+
+    //    var total = document.getElementById('FinalAmount');
+
+    //    total.value = minus;
+
+    //    var mm = separateNum(total.value, total);
+
+    //    total.value = mm.toString();
+    //}
+
+    //jQuery(document).ready(function($) {
+    //    var myButton = $("#btnSave");
+    //    var myInput = $("#FinalAmount");
+    //    var discount = $('#Discount');
+    //    myButton.click(function() {
+    //        var inputValue = myInput.val();
+    //        var discountValue = discount.val();
+
+    //        inputValue = inputValue.replace(/,\s?/g, "");
+    //        discountValue = discountValue.replace(/,\s?/g, "");
+
+    //        document.getElementById("FinalAmountFor").value = inputValue;
+    //        document.getElementById("FinalDiscount").value = discountValue;
+    //    });
+    //});
+
+
+    jQuery(document).ready(function($) {
+
+        $('input[type=datetime]').datepicker({
+            dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true, changeMonth: true,
+            changeYear: true
+        });
+
+        $('body').on('input','#sPlan',function(e) {
+
+            var selectedPlanId = $('#sPlan').val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetAmountOfPlan")",
+                dataType: "text",
+                data:
+                {
+                    id: selectedPlanId
+                },
+                success: function(r) {
+                    $('#PlanAmount').val(r);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetAmountOfPlanToRial")",
+                dataType: "text",
+                data:
+                {
+                    id: selectedPlanId
+                },
+                success: function(r) {
+                    $('#txtPlanAmount').val(r);
+                }
+            });
+
+            $('#Discount').val('');
+            $('#FinalAmount').val('');
+        });
+    });
+
+    $('#sStudy').select2();
+    $('#sGrade').select2();
+    $('#sPlan').select2();
+    $('#sCourse').select2();
+    $('#sPayType').select2();
+</script>
+

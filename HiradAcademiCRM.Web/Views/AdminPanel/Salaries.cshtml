@@ -1,0 +1,317 @@
+﻿﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.Convertor
+@model KonkurCRM.Core.DTOs.Adviser.InvoiceViewModel
+@{
+    ViewData["Title"] = "پرداخت ها";
+}
+
+<div id="root">
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_SidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <div class="container">
+        <!-- Title and Top Buttons Start -->
+        <div class="page-title-container">
+            <div class="row">
+                <!-- Title Start -->
+                <div class="col-auto mb-3 mb-md-0 me-auto">
+                    <div class="w-auto sw-md-30">
+                        <a href="/adminpanel" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                            <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                            <span class="text-small align-middle">پیشخوان</span>
+                        </a>
+                        <h1 class="mb-0 pb-0 display-4" id="title">لیست پرداخت ها</h1>
+                    </div>
+                </div>
+                <!-- Title End -->
+                <!-- Top Buttons Start -->
+                <div class="w-100 d-md-none"></div>
+                <div class="col-12 col-sm-6 col-md-auto d-flex align-items-end justify-content-end mb-2 mb-sm-0 order-sm-3">
+                    <a href="/AdminPanel/AddSalary" class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto">
+                        <i data-cs-icon="plus"></i>
+                        <span>پرداخت جدید</span>
+                    </a>
+                    <div class="dropdown d-inline-block d-lg-none">
+                        <button type="button"
+                                class="btn btn-outline-primary btn-icon btn-icon-only ms-1"
+                                data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i data-cs-icon="sort"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end custom-sort">
+                            <a class="dropdown-item sort" data-sort="name" href="#">Title</a>
+                            <a class="dropdown-item sort" data-sort="email" href="#">Stock</a>
+                            <a class="dropdown-item sort" data-sort="phone" href="#">Price</a>
+                            <a class="dropdown-item sort" data-sort="group" href="#">Status</a>
+                        </div>
+                    </div>
+                    <div class="btn-group ms-1 check-all-container-checkbox-click">
+                        <div class="btn btn-outline-primary btn-custom-control p-0 ps-3 pe-2" data-target="#checkboxTable">
+                            <span class="form-check float-end">
+                                <input type="checkbox" class="form-check-input" id="checkAll" />
+                            </span>
+                        </div>
+                        <button type="button"
+                                class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-offset="0,3"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"></button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <button class="dropdown-item" id="deleteChecked" type="button">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Buttons End -->
+            </div>
+        </div>
+        <!-- Title and Top Buttons End -->
+        <!-- Controls Start -->
+        <div class="row mb-2">
+            <!-- Search Start -->
+            <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                    <select id="sAdviser" class="form-control" name="adviserId" asp-items="@(ViewData["advisers"] as SelectList)"></select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                    <input type="datetime" class="form-control" id="txtFDate" placeholder="از تاریخ ..." data-mddatetimepicker="true" data-placement="right" data-englishnumber="true" />
+                    <span class="search-magnifier-icon">
+                        <i data-cs-icon="search"></i>
+                    </span>
+                    <span class="search-delete-icon d-none">
+                        <i data-cs-icon="close"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                    <input type="datetime" class="form-control" id="txtTDate" placeholder="تا تاریخ ..." data-mddatetimepicker="true" data-placement="right" data-englishnumber="true" />
+                    <span class="search-magnifier-icon">
+                        <i data-cs-icon="search"></i>
+                    </span>
+                    <span class="search-delete-icon d-none">
+                        <i data-cs-icon="close"></i>
+                    </span>
+                </div>
+            </div>
+            <!-- Search End -->
+
+        </div>
+        <!-- Controls End -->
+        <!-- Customers List Start -->
+        <div id="tableAdvisers" class="row">
+            <div class="col-12 mb-5">
+                <div class="card mb-2 bg-transparent no-shadow d-none d-lg-block">
+                    <div class="row g-0 sh-3">
+                        <div class="col">
+                            <div class="card-body pt-0 pb-0 h-100">
+                                <div class="row g-0 h-100 align-content-center">
+                                    @*<div class="col-12 col-lg-1 d-flex align-items-center mb-2 mb-lg-0 text-muted text-small">کد ملی</div>*@
+                                    <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">مشاور</div>
+                                    <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">عنوان</div>
+                                    <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">تاریخ</div>
+                                    <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">مبلغ</div>
+                                    <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">توضیحات</div>
+                                    <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">دستورات</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="checkboxTable" class="salary-container">
+                    @foreach (var items in Model.AdviserInvoiceViewModels)
+                    {
+
+                        <div class="card mb-2">
+                            <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                <div class="row g-0 h-100 align-content-center">
+                                    <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-3 order-lg-2">
+                                        <div class="text-muted text-small d-lg-none">Name</div>
+                                        <a href="/adminPanel/AdviserDetail/@items.AdviserId">@items.AdviserNameFamily</a>
+                                    </div>
+                                    <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                        <div class="text-muted text-small d-lg-none"></div>
+                                        <div class="text-alternate">
+                                            @items.Title
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                        <div class="text-muted text-small d-lg-none"></div>
+                                        <div class="text-alternate">
+                                            @items.PaySalaryDate.ToShamsi()
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                        <div class="text-muted text-small d-lg-none"></div>
+                                        <div class="text-alternate">
+                                            @items.Amount.ToRial()
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                        <div class="text-muted text-small d-lg-none"></div>
+                                        <div class="text-alternate">
+                                            @items.Description
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                        <div class="row d-flex justify-content-evenly col-auto">
+                                            <button data-id="@items.AdviserInvoiceId" data-attrtitle="@items.Title" class="edit-salary btn btn-outline-primary btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem;padding: 0">
+                                                <i data-cs-icon="pen"></i>
+                                            </button>
+                                            <button data-id="@items.AdviserInvoiceId" data-title="@items.Title" class="delete-salary btn btn-outline-danger btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem;padding: 0" data-bs-toggle="modal" data-bs-target="#DeleteSalaryModal">
+                                                <i data-cs-icon="bin"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                    <!-- Pagination Start -->
+                        
+                    <partial name="_PaginationPages"/>
+
+                    <!-- Pagination End -->
+                </div>
+            </div>
+        </div>
+        <!-- Customers List End -->
+
+    </div>
+    <!-- Modal Delete PlanAttribute Start-->
+    <div class="modal fade" id="DeleteSalaryModal" tabindex="-1" aria-labelledby="DeleteSalaryModalLabelDefault" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteSalaryModalLabelDefault">حذف ویژگی طرح</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <!-- <i data-cs-icon="close"></i> -->
+                    </button>
+                </div>
+                <div class="modal-body">
+                    آیا از حذف <span id="modalDeleteBodyText" class="text-primary"></span> اطمینان دارید ؟!
+                    <input type="hidden" id="modalDeleteReceivedId" value=""/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-danger" onclick="DeleteSalary()">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete PlanAttribute End-->
+</main>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('input[type=datetime]').datepicker({ dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true , changeMonth: true,
+            changeYear: true });
+    });
+</script>
+
+<script>
+    jQuery(document).ready(function($) {
+
+        const body = $("body");
+
+        const pagination = [
+            { selector : '.pagination a#aPage', pageId : 'this' },
+            { selector : '.pagination a#aFirstPage', pageId :'1' },
+            { selector : '.pagination a#aPreviousPage', pageId : Number($('#currentPage').text()) - 1 },
+            { selector : '.pagination a#aNextPage', pageId : Number($('#currentPage').text()) + 1 },
+            { selector : '.pagination a#aLastPage', pageId :  $('#pageCount').text() }
+        ];
+
+        for (let page of pagination) {
+
+            body.on('click', page.selector, function (e) {
+
+                e.preventDefault();
+                let pageId = page.pageId === 'this' ? $(this).text() : page.pageId;
+                initAjaxFilterData(event ,pageId);
+
+            }); }
+
+        function initAjaxFilterData(event ,pageID) {
+            args = {
+                'ajax_url': "@Url.Action("Salaries")",
+                'find': '.salary-container',
+                'data': {
+                    'adviserId': $('#sAdviser').val(),
+                    'fromDate': $('#txtFDate').val(),
+                    'toDate': $('#txtTDate').val()
+                },
+            };
+            if (typeof pageID != 'undefined') {
+                args.data.pageId = pageID;
+            }
+
+            $(document.body).trigger('run_ajax_filter', [args]);
+        }
+
+        $(".form-control").on('input', initAjaxFilterData);
+
+        $('#ui-datepicker-div').on('click','.ui-datepicker-calendar td a',initAjaxFilterData);
+
+        $('#sAdviser').select2();
+
+        $(document).on("click", ".edit-salary", function () {
+            var salaryId = $(this).data('id');
+
+            location.replace("/AdminPanel/EditSalary/" + salaryId);
+        });
+
+        $(document).on("click", ".delete-salary", function () {
+            var salaryId = $(this).data('id');
+            var salaryTitle = $(this).data('title');
+            $(".modal-body #modalDeleteReceivedId").val( salaryId );
+            $(".modal-body #modalDeleteBodyText").text( salaryTitle );
+        });
+    });
+
+    function DeleteSalary() {
+        var id = $('#modalDeleteReceivedId').val();
+        $.ajax({
+            url: "/AdminPanel/DeleteSalary/" + id,
+            data: {
+                id : id
+            },
+            type: "Get"
+        }).done(function (result) {
+            location.replace("/AdminPanel/Salaries/");
+        });
+    }
+</script>

@@ -1,0 +1,332 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = HiradAcademiCRM.Web
+build_property.RootNamespace = HiradAcademiCRM.Web
+build_property.ProjectDir = C:\Users\Phoenix\Desktop\HiradAcademiCRM-main\HiradAcademiCRM-main\HiradAcademiCRM.Web\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Phoenix\Desktop\HiradAcademiCRM-main\HiradAcademiCRM-main\HiradAcademiCRM.Web
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AddAdviser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZGRBZHZpc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AddCourse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZGRDb3Vyc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AddPlan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZGRQbGFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AddRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZGRSb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AddSalary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZGRTYWxhcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AdviserDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZHZpc2VyRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/Advisers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZHZpc2Vycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/AdvisersStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxBZHZpc2Vyc1N0dWRlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/CanceledStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxDYW5jZWxlZFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/CourseDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxDb3Vyc2VEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/Courses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxDb3Vyc2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/DeletedAdvisers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxEZWxldGVkQWR2aXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/DeletedCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxEZWxldGVkQ291cnNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/DeletedPlans.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxEZWxldGVkUGxhbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/DeletedStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxEZWxldGVkU3R1ZGVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/EditAdviser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxFZGl0QWR2aXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/EditCourse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxFZGl0Q291cnNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/EditPlan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxFZGl0UGxhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/EditRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxFZGl0Um9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/EditSalary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxFZGl0U2FsYXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/ManageRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxNYW5hZ2VSb2xlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/PlanAttributes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxQbGFuQXR0cmlidXRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/PlanDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxQbGFuRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/Plans.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxQbGFucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/RoleDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxSb2xlRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/Salaries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxTYWxhcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/ShowCheque.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxTaG93Q2hlcXVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/ShowInstallments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxTaG93SW5zdGFsbG1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/ShowPays.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxTaG93UGF5cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/StudentDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxTdHVkZW50RGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/Students.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/UnRegisteredStudentDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxVblJlZ2lzdGVyZWRTdHVkZW50RGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/UnregisteredStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxVbnJlZ2lzdGVyZWRTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdminPanel/_AddAdviserAsUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5QYW5lbFxfQWRkQWR2aXNlckFzVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddCheque.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZENoZXF1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddFollowUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZEZvbGxvd1VwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddInstallment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZEluc3RhbGxtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddPayCash.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZFBheUNhc2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddRegisteredCall.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZFJlZ2lzdGVyZWRDYWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddStudentViaAdviser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZFN0dWRlbnRWaWFBZHZpc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AddUnRegisterFollowUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkZFVuUmVnaXN0ZXJGb2xsb3dVcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AdviserDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkdmlzZXJEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/Advisers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkdmlzZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/AdvisersStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEFkdmlzZXJzU3R1ZGVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/CanceledStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXENhbmNlbGVkU3R1ZGVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/DeletedStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXERlbGV0ZWRTdHVkZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditCheque.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRDaGVxdWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditFollowUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRGb2xsb3dVcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditInstallment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRJbnN0YWxsbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditPayCash.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRQYXlDYXNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditRegisteredStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRSZWdpc3RlcmVkU3R1ZGVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRTdHVkZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/EditUnRegisterFollowUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEVkaXRVblJlZ2lzdGVyRm9sbG93VXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/FollowUps.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEZvbGxvd1Vwcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/PayInstallment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFBheUluc3RhbGxtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/RegisteredCalls.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFJlZ2lzdGVyZWRDYWxscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/RegisterStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFJlZ2lzdGVyU3R1ZGVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/ShowCheque.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFNob3dDaGVxdWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/ShowInstallments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFNob3dJbnN0YWxsbWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/ShowPays.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFNob3dQYXlzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/StudentDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFN0dWRlbnREZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/Students.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/UnRegisteredFollowUps.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFVuUmVnaXN0ZXJlZEZvbGxvd1Vwcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/UnRegisteredStudentDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFVuUmVnaXN0ZXJlZFN0dWRlbnREZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/AdviserPanel/UnregisteredStudents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2aXNlclBhbmVsXFVucmVnaXN0ZXJlZFN0dWRlbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_AdviserSidebarMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZHZpc2VyU2lkZWJhck1lbnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_Logo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_PaginationPages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYWdpbmF0aW9uUGFnZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_SidebarIconMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFySWNvbk1lbnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_SidebarMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyTWVudS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_SidebarUserMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyVXNlck1lbnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Phoenix/Desktop/HiradAcademiCRM-main/HiradAcademiCRM-main/HiradAcademiCRM.Web/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

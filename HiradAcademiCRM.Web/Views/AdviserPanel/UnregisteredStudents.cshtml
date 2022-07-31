@@ -1,0 +1,284 @@
+﻿@using KonkurCRM.Core.DTOs.Call
+@using KonkurCRM.Core.Services.Interfaces
+@model KonkurCRM.Core.DTOs.Student.StudentViewModel
+@inject IStudentService _studentService
+
+@{
+    ViewData["Title"] = "دانش آموزان ثبت نام نشده";
+}
+
+<div id="root">
+    <div id="nav" class="nav-container d-flex">
+        <div class="nav-content d-flex">
+            <!-- Logo Start -->
+            <partial name="_Logo" />
+            <!-- Logo End -->
+            <!-- User Menu Start -->
+            <partial name="_SidebarUserMenu"/>
+            <!-- User Menu End -->
+            <!-- Icons Menu Start -->
+            <partial name="_SidebarIconMenu"/>
+            <!-- Icons Menu End -->
+            <!-- Menu Start -->
+            <partial name="_AdviserSidebarMenu"/>
+            <!-- Menu End -->
+            <!-- Mobile Buttons Start -->
+            <div class="mobile-buttons-container">
+                <!-- Menu Button Start -->
+                <a href="#" id="mobileMenuButton" class="menu-button">
+                    <i data-cs-icon="menu"></i>
+                </a>
+                <!-- Menu Button End -->
+            </div>
+            <!-- Mobile Buttons End -->
+        </div>
+        <div class="nav-shadow"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <!-- Title and Top Buttons Start -->
+            <div class="page-title-container">
+                <div class="row">
+                    <!-- Title Start -->
+                    <div class="col-auto mb-3 mb-md-0 me-auto">
+                        <div class="w-auto sw-md-30">
+                            <a href="/adminpanel" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                                <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                                <span class="text-small align-middle">پیشخوان</span>
+                            </a>
+                            <h1 class="mb-0 pb-0 display-4" id="title">لیست دانش آموزان ثبت نام نشده</h1>
+                        </div>
+                    </div>
+                    <!-- Title End -->
+                    <!-- Top Buttons Start -->
+                    <div class="col-3 d-flex align-items-end justify-content-end">
+                        <!-- Check Button Start -->
+                        <div class="btn-group ms-1 check-all-container">
+                            <div class="btn btn-outline-primary btn-custom-control p-0 ps-3 pe-2" style="border-top-right-radius: var(--border-radius-md);border-bottom-right-radius: var(--border-radius-md);" data-target="#checkboxTable">
+                                <span class="form-check float-end">
+                                    <input type="checkbox" class="form-check-input" id="checkAll" />
+                                </span>
+                            </div>
+                            <button type="button"
+                                    class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                    data-bs-offset="0,3"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"></button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#">
+                                    <span class="align-middle d-inline-block">Status</span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="align-middle d-inline-block">Move</span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="align-middle d-inline-block">Delete</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Check Button End -->
+                    </div>
+                    <!-- Top Buttons End -->
+                </div>
+            </div>
+            <!-- Title and Top Buttons End -->
+            <!-- Controls Start -->
+            <div class="row mb-2">
+                <!-- Search Start -->
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtFamily" class="form-control" name="family" placeholder="نام خانوادگی" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtMobile" class="form-control" name="mobile" placeholder="موبایل" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtPhone" class="form-control" name="phone" placeholder="تلفن" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtCity" class="form-control" name="city" placeholder="آدرس" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <select id="sStudy" class="form-control" name="studyId" asp-items="@(ViewData["study"] as SelectList)"></select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <select id="sGrade" class="form-control" name="gradeId" asp-items="@(ViewData["grade"] as SelectList)"></select>
+                    </div>
+                </div>
+                <!-- Search End -->
+
+            </div>
+            <!-- Controls End -->
+            <!-- Customers List Start -->
+            <div id="tableAdvisers" class="row">
+                <div class="col-12 mb-5">
+                    <div class="card mb-2 bg-transparent no-shadow d-none d-lg-block">
+                        <div class="row g-0 sh-3">
+                            <div class="col">
+                                <div class="card-body pt-0 pb-0 h-100">
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">نام</div>
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">موبایل</div>
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">مقطع</div>
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">رشته</div>
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">تماس گیرنده</div>
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">ثبت نام</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="checkboxTable" class="student-container">
+                        @foreach (var items in Model.InformationStudents)
+                        {
+                            List<InformationUnregisteredCalls> unregisteredCalls = _studentService.GetUnregisteredCallsByStudentId(items.StudentId);
+
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-3 order-lg-2">
+                                            <div class="text-muted text-small d-lg-none">Name</div>
+                                            <a href="/adviserPanel/UnRegisteredStudentDetail/@items.StudentId">@items.Name @items.Family</a>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <div class="text-alternate">
+                                                @items.Mobile1
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <div class="text-alternate">@items.Grade</div>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <div class="text-alternate">@items.Study</div>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            @foreach (var i in unregisteredCalls)
+                                            {
+                                                <div class="text-alternate">
+                                                    @i.AdviserNameFamily
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="icon-center col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <a href="/AdviserPanel/RegisterStudent/@items.StudentId" class="btn btn-outline-success btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0;margin-left: 1rem">
+                                                <i data-cs-icon="plus"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+                        
+                        <partial name="_PaginationPages"/>
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Customers List End -->
+
+        </div>
+    </main>
+</div>
+
+<script>
+
+    jQuery(document).ready(function($) {
+
+        const body = $("body");
+
+        const pagination = [
+            { selector : '.pagination a#aPage', pageId : 'this' },
+            { selector : '.pagination a#aFirstPage', pageId :'1' },
+            { selector : '.pagination a#aPreviousPage', pageId : Number($('#currentPage').text()) - 1 },
+            { selector : '.pagination a#aNextPage', pageId : Number($('#currentPage').text()) + 1 },
+            { selector : '.pagination a#aLastPage', pageId :  $('#pageCount').text() }
+        ];
+
+       for (let page of pagination) {
+
+            body.on('click', page.selector, function (e) {
+
+                e.preventDefault();
+                let pageId = page.pageId === 'this' ? $(this).text() : page.pageId;
+                initAjaxFilterData(event ,pageId);
+
+            }); }
+
+        function initAjaxFilterData(event ,pageID) {
+
+            args = {
+                'ajax_url': "@Url.Action("UnregisteredStudents")",
+                'find': '.student-container',
+                'data': {
+                    'family': $('#txtFamily').val(),
+                    'mobile': $('#txtMobile').val(),
+                    'phone': $('#txtPhone').val(),
+                    'city': $('#txtCity').val(),
+                    'studyId': $('#sStudy').val(),
+                    'gradeId': $('#sGrade').val(),
+
+                }
+            };
+
+            if (typeof pageID != 'undefined') {
+                args.data.pageId = pageID;
+            }
+           
+            $(document.body).trigger('run_ajax_filter', [args]);
+        }
+
+      
+        $(".form-control").on('input', initAjaxFilterData);
+
+        $('#sStudy').select2();
+        $('#sGrade').select2();
+    })
+</script>
+

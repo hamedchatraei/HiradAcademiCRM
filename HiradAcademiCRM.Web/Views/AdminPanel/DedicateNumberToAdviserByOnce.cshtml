@@ -1,0 +1,72 @@
+﻿@model KonkurCRM.DataLayer.Entities.Calls.NotCalled
+
+@{
+    ViewData["Title"] = "اختصاص شماره به مشاور";
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_SidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <form enctype="multipart/form-data" method="post">
+        <input type="hidden" asp-for="AddDate" value="@DateTime.Now"/>
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button id="btnSave" type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">افزودن شماره برای مشاور</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                @if (ViewBag.IsAdd == true)
+                {
+                    <div class="alert alert-success col-2">
+                        شماره @ViewData["AddedNumber"] ثبت شد
+                    </div>
+                }
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sAdviser" class="form-control select2" asp-for="AdviserId" asp-items="@(ViewData["advisers"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input id="txtNumber" asp-for="Number" class="form-control" placeholder="شماره">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript">
+
+    $('#sAdviser').select2();
+</script>

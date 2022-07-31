@@ -1,0 +1,64 @@
+﻿@inject IPermissionService _permissionService
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.User
+@model KonkurCRM.Core.DTOs.User.CreateUserViewModel
+
+@{
+    List<Role> roles = _permissionService.GetRoles();
+}
+
+<div class="text-center text-large text-primary" style="margin-bottom: 2rem;margin-top: 2rem">ثبت مشاور به عنوان کاربر</div>
+<div class="container col-12 row">
+    <div class="col-6">
+        <h2 class="small-title">مشخصات</h2>
+        <div class="card">
+            <div class="card-body">
+                    <div class="mb-3 filled">
+                        <i data-cs-icon="user" class="text-muted"></i>
+                        <input class="form-control" asp-for="UserName" placeholder="نام کاربری">
+                    </div>
+                    <div class="mb-3 filled">
+                        <i data-cs-icon="key" class="text-muted"></i>
+                        <input class="form-control" asp-for="Password" placeholder="کلمه عبور">
+                    </div>
+                    <div class="mb-3 filled">
+                        <input type="file" asp-for="UserAvatar">
+                    </div>
+                <div style="margin-bottom: 2rem">
+                    <img style=" width: 10rem;height: 10rem" id="imgAvatar" class="thumbnail" src="/UserAvatar/Default.jpg" />
+                </div>
+                <input type="hidden" asp-for="UserAliasName" value="?"/>
+                <input type="hidden" asp-for="Mobile" value="0"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h2 class="small-title">نقش ها</h2>
+        @foreach (var role in roles)
+        {
+            <div class="col-12 col-xl-8 col-xxl-9 mb-5 tab-content">
+                <!-- Permissions Tab Start -->
+            <div class="tab-pane fade active show" id="permissionsTab" role="tabpanel">
+                    <div class="row row-cols-1 g-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    <label class="form-check custom-icon mb-0 checked-opacity-100">
+                                        <input type="checkbox" name="selectedRoles" value="@role.RoleId" class="form-check-input">
+                                        <span class="form-check-label">
+                                            <span class="content opacity-50">
+                                                <span class="heading mb-1 lh-1-25">@role.RoleTitle</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Permissions Tab End -->
+        </div>
+        }
+    </div>
+</div>
+

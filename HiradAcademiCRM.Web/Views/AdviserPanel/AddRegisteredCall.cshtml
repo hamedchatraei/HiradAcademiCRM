@@ -1,0 +1,158 @@
+﻿@model KonkurCRM.Core.DTOs.Call.AddCallViewModel
+
+@{
+    ViewData["Title"] = "افزودن تماس";
+
+    int followUpId = Convert.ToInt32(ViewData["FollowUpId"]);
+    int adviserId = Convert.ToInt32(ViewData["AdviserId"]);
+    int isCall = Convert.ToInt32(ViewData["IsCall"]);
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_AdviserSidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <form method="post" asp-action="AddRegisteredCall">
+        <input type="hidden" asp-for="FollowUpId" value="@followUpId" />
+        <input type="hidden" asp-for="AdviserId" value="@adviserId" />
+        <input type="hidden" asp-for="CallTime" id="FullTime" />
+        <input type="hidden" asp-for="IsCall" id="IsCall" />
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button id="btnSave" type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">ثبت تماس جدید</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sAdviser" class="form-control select2" asp-for="RegisterId" asp-items="@(ViewData["registers"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input type="datetime" class="form-control" asp-for="CallDate" placeholder="تاریخ تماس">
+                        </div>
+                        <div class="mb-3 row filled">
+                            <i data-cs-icon="time" class="text-muted"></i>
+                            <input type="text" id="InputHour" onchange="changeHandler()" class="form-control" style="text-align: center;width: 10%" autocomplete="off" tabindex="3" required>
+                            <span>:</span>
+                            <input type="text" id="InputMinute" onchange="changeHandler()" class="form-control" style="text-align: center;width: 10%" autocomplete="off" tabindex="3" required>
+                            <span>:</span>
+                            <input type="text" id="inputSeconds" onchange="changeHandler()" class="form-control" style="text-align: center;width: 10%" autocomplete="off" tabindex="2" required>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="note" class="text-muted"></i>
+                            <input class="form-control" asp-for="Subject" placeholder="موضوع">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="file-text" class="text-muted"></i>
+                            <textarea rows="5" class="form-control" asp-for="Description" placeholder="توضیحات"></textarea>
+                        </div>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Call" value="option1">
+                                <label class="form-check-label">تماس</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Message" value="option2">
+                                <label class="form-check-label">پیام</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($) {
+        $('input[type=datetime]').datepicker({
+            dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true, changeMonth: true,
+            changeYear: true
+        });
+    });
+
+    jQuery(document).ready(function RepairDate() {
+
+        var inputHour = $("#InputHour").val();
+        var inputMinute = $("#InputMinute").val();
+        var inputSeconds = $("#inputSeconds").val();
+
+        var fullTime = inputHour + ':' + inputMinute + ':' + inputSeconds;
+
+        document.getElementById("FullTime").value = fullTime;
+
+        
+        var isCall = $("#IsCall");
+
+        $("#Call").prop("checked", true);
+
+        if ($('#Call').is(':checked')) {
+            isCall.val(true);
+            console.log(isCall.val());
+        }
+
+        if ($('#Message').is(':checked')) {
+            isCall.val(false);
+            console.log(isCall.val());
+        }
+
+        $('input[type=radio][name=inlineRadioOptions]').change(
+            function() {
+                var isCall = $("#IsCall");
+                if ($('#Call').is(':checked')) {
+                    isCall.val(true);
+                    console.log(isCall.val());
+                }
+                else if ($('#Message').is(':checked')) {
+                    isCall.val(false);
+                    console.log(isCall.val());
+                }
+            });
+    });
+
+    function changeHandler() {
+
+        var inputHour = $("#InputHour").val();
+        var inputMinute = $("#InputMinute").val();
+        var inputSeconds = $("#inputSeconds").val();
+
+        var fullTime = inputHour + ':' + inputMinute + ':' + inputSeconds;
+
+        document.getElementById("FullTime").value = fullTime;
+    }
+
+    
+
+</script>
+

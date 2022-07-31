@@ -1,0 +1,149 @@
+﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Advisers
+@using KonkurCRM.DataLayer.Entities.Calls
+@using KonkurCRM.DataLayer.Entities.User
+@model KonkurCRM.Core.DTOs.Call.UnRegisteredCallAndStudentComplexViewModel
+@inject IUserService _userService
+@inject IAdviserService _adviserService
+@inject ICallService _CallService
+
+@{
+    ViewData["Title"] = "افزودن دانش آموز";
+    
+    int isCall = Convert.ToInt32(ViewData["isCall"]);
+    string number = ViewData["Number"].ToString();
+
+    User user = _userService.GetUserByUserName(User.Identity.Name);
+
+    Adviser adviser = _adviserService.GetAdviserByUserId(user.UserId);
+
+    int adviserId = adviser.AdviserId;
+
+    NotCalled notCalled = _CallService.GetNotCalledByNumber(number);
+    int sa = 0;
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_AdviserSidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main class="main">
+    <form method="post" asp-action="AddStudentViaAdviser">
+        <input type="hidden" asp-for="NotCalled.NotCalledId" value="@notCalled.NotCalledId"/>
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">ثبت دانش آموز جدید</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.Name" placeholder="نام (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.Family" placeholder="نام خانوادگی (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.FatherName" placeholder="نام پدر (در صورت ندانستن ، خالی بگذارید)">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.Mobile1" value="@ViewData["Number"]" placeholder="موبایل دانش آموز">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.Mobile2" value="@ViewData["Number"]" placeholder="موبایل پدر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.Mobile3" value="@ViewData["Number"]" placeholder="موبایل مادر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.PhoneNumber" placeholder="تلفن ثابت">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <input class="form-control" asp-for="Student.City" placeholder="شهر">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <select id="sStudy" class="form-control" asp-for="Student.StudyId"  asp-items="@(ViewData["study"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <select id="sGrade" class="form-control" asp-for="Student.GradeId"  asp-items="@(ViewData["grade"] as SelectList)"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem; margin-top: 2rem">ثبت تماس جدید</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <input type="hidden" value="@adviserId" asp-for="UnregisteredCalls.AdviserId"/>
+                <input type="hidden" value="1" asp-for="UnregisteredCalls.StudentId"/>
+                <input type="hidden" value="@DateTime.Now" asp-for="UnregisteredCalls.CallDate"/>
+                <input type="hidden" value=@(isCall == 1 ? "true" : "false") asp-for="UnregisteredCalls.IsCall"/>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <input class="form-control" asp-for="UnregisteredCalls.CallTime" value="00:00" readonly="readonly">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input class="form-control" asp-for="UnregisteredCalls.Subject" placeholder="موضوع تماس">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="tv" class="text-muted"></i>
+                            <textarea rows="5" asp-for="UnregisteredCalls.Description" class="form-control" id="txtEditAttrTitle" placeholder="توضیحات"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+
+    });
+
+    $('#sStudy').select2();
+    $('#sGrade').select2();
+</script>
+

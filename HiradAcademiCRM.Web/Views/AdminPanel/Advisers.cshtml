@@ -1,0 +1,363 @@
+﻿@using System.Collections.Immutable
+@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.DTOs.Adviser
+@using KonkurCRM.Core.Generator
+@using KonkurCRM.Core.Services.Interfaces
+@using Microsoft.CodeAnalysis.Scripting
+@model KonkurCRM.Core.DTOs.Adviser.AdviserViewModel
+@inject IRegisterService _registerService;
+@inject IAdviserService _adviserService;
+@inject ISettingsService _settingsService;
+
+@{
+    ViewData["Title"] = "مشاوران";
+
+    List<InformationAdviserViewModel> advisers = new List<InformationAdviserViewModel>();
+
+    List<InformationAdviserViewModel> finalAdviser = new List<InformationAdviserViewModel>();
+
+    int pageId = Convert.ToInt32(ViewData["groupId"]);
+}
+
+<div id="root">
+    <div id="nav" class="nav-container d-flex">
+        <div class="nav-content d-flex">
+            <!-- Logo Start -->
+            <partial name="_Logo" />
+            <!-- Logo End -->
+            <!-- User Menu Start -->
+            <partial name="_SidebarUserMenu" />
+            <!-- User Menu End -->
+            <!-- Icons Menu Start -->
+            <partial name="_SidebarIconMenu" />
+            <!-- Icons Menu End -->
+            <!-- Menu Start -->
+            <partial name="_SidebarMenu" />
+            <!-- Menu End -->
+            <!-- Mobile Buttons Start -->
+            <div class="mobile-buttons-container">
+                <!-- Menu Button Start -->
+                <a href="#" id="mobileMenuButton" class="menu-button">
+                    <i data-cs-icon="menu"></i>
+                </a>
+                <!-- Menu Button End -->
+            </div>
+            <!-- Mobile Buttons End -->
+        </div>
+        <div class="nav-shadow"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <!-- Title and Top Buttons Start -->
+            <div class="page-title-container">
+                <div class="row">
+                    <!-- Title Start -->
+                    <div class="col-auto mb-3 mb-md-0 me-auto">
+                        <div class="w-auto sw-md-30">
+                            <a href="/adminpanel" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                                <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                                <span class="text-small align-middle">پیشخوان</span>
+                            </a>
+                            <h1 class="mb-0 pb-0 display-4" id="title">لیست مشاوران</h1>
+                        </div>
+                    </div>
+                    <!-- Title End -->
+                    <!-- Top Buttons Start -->
+                    <div class="w-100 d-md-none"></div>
+                    <div class="col-12 col-sm-6 col-md-auto d-flex align-items-end justify-content-end mb-2 mb-sm-0 order-sm-3">
+                        <a href="/adminpanel/AddAdviser" class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto">
+                            <i data-cs-icon="plus"></i>
+                            <span>مشاور جدید</span>
+                        </a>
+                        <div class="dropdown d-inline-block d-lg-none">
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-icon btn-icon-only ms-1"
+                                    data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i data-cs-icon="sort"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end custom-sort">
+                                <a class="dropdown-item sort" data-sort="name" href="#">Title</a>
+                                <a class="dropdown-item sort" data-sort="email" href="#">Stock</a>
+                                <a class="dropdown-item sort" data-sort="phone" href="#">Price</a>
+                                <a class="dropdown-item sort" data-sort="group" href="#">Status</a>
+                            </div>
+                        </div>
+                        <div class="btn-group ms-1 check-all-container-checkbox-click">
+                            <div class="btn btn-outline-primary btn-custom-control p-0 ps-3 pe-2" data-target="#checkboxTable">
+                                <span class="form-check float-end">
+                                    <input type="checkbox" class="form-check-input" id="checkAll" />
+                                </span>
+                            </div>
+                            <button type="button"
+                                    class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                    data-bs-offset="0,3"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"></button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <button class="dropdown-item" id="deleteChecked" type="button">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Top Buttons End -->
+                </div>
+            </div>
+            <!-- Title and Top Buttons End -->
+            <!-- Controls Start -->
+            <div class="row mb-2">
+                <!-- Search Start -->
+                <span>نمایش مشاور بر اساس :</span>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <select id="sGroup" class="form-control select2" name="groupId" asp-items="@(ViewData["groupAdviser"] as SelectList)"></select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtFamily" class="form-control" name="family" placeholder="نام خانوادگی" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input id="txtMobile" class="form-control" name="mobile" placeholder="موبایل" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Search End -->
+
+            </div>
+            <!-- Controls End -->
+            <!-- Customers List Start -->
+            <div id="tableAdvisers" class="row adviser-container">
+                <div class="col-12 mb-5">
+                    <div class="card mb-2 bg-transparent no-shadow d-none d-lg-block">
+                        <div class="row g-0 sh-3">
+                            <div class="col">
+                                <div class="card-body pt-0 pb-0 h-100">
+                                    <div class="row g-0 h-100 align-content-center">
+                                        @if (pageId == 2 || pageId == 0)
+                                        {
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">نام</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">موبایل</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">گروه مشاور</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">دانش آموزان این ماه</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">واریزی این ماه</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">نام</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">موبایل</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">گروه مشاور</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">دانش آموزان این ماه</div>
+                                            <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">دانش آموزان فعال این ماه</div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="checkboxTable">
+                        @foreach (var items in Model.InformationAdviser)
+                        {
+                            InformationAdviserViewModel info = new InformationAdviserViewModel
+                {
+                    AdviserId = items.AdviserId,
+                    GroupId = items.GroupId,
+                    Name = items.Name,
+                    Family = items.Family,
+                    JobMobile = items.JobMobile,
+                    PersonalMobile = items.PersonalMobile,
+                    Study = items.Study,
+                    AccountNumber = items.AccountNumber
+                };
+
+                            advisers.Add(info);
+
+                            IEnumerable<InformationAdviserViewModel> checkAdviser = RemoveDuplicates.RemoveDuplicateAdvisers(advisers);
+
+                            finalAdviser = checkAdviser.ToList();
+
+                        }
+
+
+                        @foreach (var items in finalAdviser)
+                        {
+                            List<string> list = _adviserService.GroupAdviserTilte(items.AdviserId);
+                            List<int> listId = _adviserService.GetAdvisersGroup(items.AdviserId);
+
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-3 order-lg-2">
+                                            <div class="text-muted text-small d-lg-none">Name</div>
+                                            <a href="/adminpanel/adviserDetail/@items.AdviserId">@items.Name @items.Family</a>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <div class="text-alternate">@items.JobMobile</div>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            @foreach (var i in list)
+                                            {
+                                                <div class="text-alternate">@i</div>
+                                            }
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-4 order-lg-4">
+                                            <div class="text-muted text-small d-lg-none">Spent</div>
+                                            <div class="text-alternate">
+                                                <span>
+                                                    @foreach (var ids in listId)
+                                                    {
+                                                        GenerateDate generate = new GenerateDate();
+                                                        int startDay = _settingsService.GetStartDayOfMonth();
+                                                        DateTime startDate = generate.GetStartDayOfMonth(startDay);
+                                                        DateTime endDate = generate.GetEndDateOfMonth(startDate);
+
+
+                                                        if (ids == 2)
+                                                        {
+                                                            <div class="text-alternate">
+                                                                @_registerService.GetRegisterByAdviserId(items.AdviserId).Where(a=>a.AdviserTypeId==@ids && a.StartDate.Date >= startDate.Date && startDate.Date <= endDate.Date).ToList().Count
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="text-alternate">
+                                                                @_registerService.GetRegisterByAdviserId(items.AdviserId).Where(a=>a.AdviserTypeId==@ids && a.StartDate.Date < DateTime.Now.Date && a.EndDate >= startDate.Date).ToList().Count
+                                                            </div>
+                                                        }
+                                                    }
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @if (pageId == 0 || pageId == 1)
+                                        {
+                                            if (items.GroupId == 2)
+                                            {
+                                                <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-4">
+                                                    <div class="text-muted text-small d-lg-none">Last Order</div>
+                                                    <div class="text-alternate">
+                                                        <div class="text-alternate">@_registerService.GetSumAmountPayAdviserForLastMonth(items.AdviserId).ToRial()</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-4">
+                                                    <div class="text-muted text-small d-lg-none">Last Order</div>
+                                                    <div class="text-alternate">
+                                                        <div class="text-alternate">ـــــــــــ</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-4">
+                                                <div class="text-muted text-small d-lg-none">Last Order</div>
+                                                <div class="text-alternate">
+                                                    <div class="text-alternate">@_registerService.GetRegisterByAdviserId(items.AdviserId).Where(a=>a.AdviserTypeId!=2 && a.IsActive).ToList().Count</div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="col-1 col-lg-1 d-flex flex-column justify-content-center align-items-lg-end mb-2 mb-lg-0 order-2 text-end order-lg-last">
+                                            <label class="form-check float-end mt-1">
+                                                <input type="checkbox" class="form-check-input" data-user="@items.AdviserId" />
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+
+                        <partial name="_PaginationPages" />
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Customers List End -->
+        </div>
+    </main>
+</div>
+
+<script>
+
+    jQuery(document).ready(function($) {
+
+        const body = $("body");
+
+        const pagination = [
+            { selector : '.pagination a#aPage', pageId : 'this' },
+            { selector : '.pagination a#aFirstPage', pageId :'1' },
+            { selector : '.pagination a#aPreviousPage', pageId : Number($('#currentPage').text()) - 1 },
+            { selector : '.pagination a#aNextPage', pageId : Number($('#currentPage').text()) + 1 },
+            { selector : '.pagination a#aLastPage', pageId :  $('#pageCount').text() }
+        ];
+
+        for (let page of pagination) {
+
+            body.on('click', page.selector, function (e) {
+
+                e.preventDefault();
+                let pageId = page.pageId === 'this' ? $(this).text() : page.pageId;
+                initAjaxFilterData(event ,pageId);
+
+            }); }
+
+        function initAjaxFilterData(event ,pageID) {
+            args = {
+                'ajax_url': "@Url.Action("Advisers")",
+                'find': '.adviser-container',
+                'data': {
+                    'family': $('#txtFamily').val(),
+                    'mobile': $('#txtMobile').val(),
+                    'groupId': $('#sGroup').val()
+                },
+            };
+            if (typeof pageID != 'undefined') {
+                args.data.pageId = pageID;
+            }
+
+            $(document.body).trigger('run_ajax_filter', [args]);
+        }
+
+        $(".form-control").on('input', initAjaxFilterData);
+
+        $('#sGroup').select2();
+
+
+        $('.form-check-input').on('input', function() {
+
+            console.log($(this).prop('checked'));
+
+            console.log($(this).data('user'));
+            let name = $(this).closest('.card');
+            name = name.find('a');
+            console.log(name.text());
+        });
+
+
+    });
+
+</script>

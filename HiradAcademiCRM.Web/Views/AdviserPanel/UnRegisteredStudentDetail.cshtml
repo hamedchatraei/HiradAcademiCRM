@@ -1,0 +1,328 @@
+﻿@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.DTOs.Call
+@using KonkurCRM.Core.DTOs.Pay
+@using KonkurCRM.Core.DTOs.Register
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Register
+@model KonkurCRM.DataLayer.Entities.Students.Student
+@inject IStudentService _studentService
+@inject IRegisterService _registerService
+
+@{
+    ViewData["Title"] = "جزئیات دانش آموز";
+
+    List<InformationUnregisteredCalls> unregisteredCalls = _studentService.GetUnregisteredCallsByStudentId(Model.StudentId);
+
+    InformationUnregisteredCalls firstCall = _studentService.GetUnregisteredCallsByStudentId(Model.StudentId).OrderBy(c => c.CallDate).First();
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_AdviserSidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <div class="container">
+        <!-- Title and Top Buttons Start -->
+        <div class="page-title-container">
+            <div class="row">
+                <!-- Title Start -->
+                <div class="col-auto mb-3 mb-md-0 me-auto">
+                    <div class="w-auto sw-md-30">
+                        <a href="/adminpanel/students" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                            <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                            <span class="text-small align-middle">دانش آموزان</span>
+                        </a>
+                        <h1 class="mb-0 pb-0" style="font-size: 1.3rem" id="title">صفحه جزئیات دانش آموز</h1>
+                    </div>
+                </div>
+                <!-- Title End -->
+                <!-- Top Buttons Start -->
+                <div class="col-12 col-md-5 d-flex align-items-end justify-content-end">
+                    <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto">
+                        <i data-cs-icon="save"></i>
+                        <span>Update</span>
+                    </button>
+
+                    <!-- Dropdown Button Start -->
+                    <div class="ms-1">
+                        <button type="button"
+                                class="btn btn-outline-primary btn-icon btn-icon-only"
+                                style="
+                               border-top-right-radius: 0;
+                               border-bottom-right-radius: 0;
+                               border-top-left-radius: var(--border-radius-md);
+                               border-bottom-left-radius: var(--border-radius-md);
+                           "
+                                data-bs-offset="0,3"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-submenu>
+                            <i data-cs-icon="more-horizontal"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <button class="dropdown-item" type="button">Edit</button>
+                            <button class="dropdown-item" type="button">View Purchases</button>
+                            <button class="dropdown-item" type="button">Check Ip</button>
+                        </div>
+                    </div>
+                    <!-- Dropdown Button End -->
+                </div>
+                <!-- Top Buttons End -->
+            </div>
+        </div>
+        <!-- Title and Top Buttons End -->
+
+        <div class="row gx-4 gy-5">
+            <!-- Adviser Start -->
+            <div class="col-12 col-xl-4 col-xxl-3">
+                <h2 class="small-title">جزئیات</h2>
+                <div class="card">
+                    <div class="card-body mb-n5">
+                        <div class="d-flex align-items-center flex-column">
+                            <div class="mb-5 d-flex align-items-center flex-column">
+                                @*<div class="sw-6 sh-6 mb-3 d-inline-block bg-primary d-flex justify-content-center align-items-center rounded-xl">
+                                <div class="text-white">BC</div>
+                                </div>*@
+                                <div class="h3 mb-1">@Model.Name @Model.Family</div>
+                                <div class="text-muted">
+                                    <i data-cs-icon="pin" class="text-muted"></i>
+                                    <span class="align-middle">@Model.City</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="d-flex flex-row justify-content-between w-100 w-sm-50 w-xl-100 mb-5">
+                                <a href="/AdviserPanel/EditStudent/@Model.StudentId" class="btn btn-outline-primary w-100 me-2">ویرایش</a>
+                                <button type="button" class="btn btn-outline-danger w-100 me-2" style="border-top-right-radius: 0;border-bottom-right-radius: 0;border-top-left-radius: var(--border-radius-md);border-bottom-left-radius: var(--border-radius-md);" data-bs-toggle="modal" data-bs-target="#DeleteModal">حذف</button>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <div>
+                                <p class="text-small text-muted mb-2">جزئیات</p>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="user" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate align-middle">@Model.Name @Model.Family</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="user" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate align-middle">@Model.FatherName</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.Mobile1</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.Mobile2</div>
+                                </div>
+
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.Mobile3</div>
+                                </div>
+
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="phone" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.PhoneNumber</div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="book" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">
+                                        @_studentService.GetStudyTitleById(Model.StudyId)
+                                    </div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="database" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">
+                                        @_studentService.GetGradeTitleById(Model.GradeId)
+                                    </div>
+                                </div>
+                                <div class="row g-0 mb-2">
+                                    <div class="col-auto">
+                                        <div class="sw-3 me-1">
+                                            <i data-cs-icon="pin" class="text-primary" data-cs-size="17"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col text-alternate">@Model.City</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Adviser End -->
+
+
+
+            <div class="col-12 col-xl-8 col-xxl-9">
+                <!-- Recent Adviser's Student Start -->
+                <!-- Recent Adviser's Student End -->
+                <!-- Activity Start -->
+                <h2 class="small-title">تاریخچه</h2>
+                <div class="card mb-5">
+                    <div class="card-body">
+                        @foreach (var unRegisters in unregisteredCalls)
+                        {
+
+                            <div class="row g-0">
+                                <div class="col-auto sw-1 d-flex flex-column justify-content-center align-items-center position-relative me-4">
+                                    <div class="w-100 d-flex sh-1"></div>
+                                    <div class="rounded-xl shadow d-flex flex-shrink-0 justify-content-center align-items-center">
+                                        <div class="bg-gradient-primary sw-1 sh-1 rounded-xl position-relative"></div>
+                                    </div>
+                                    <div class="w-100 d-flex h-100 justify-content-center position-relative">
+                                        <div class="line-w-1 bg-separator h-100 position-absolute"></div>
+                                    </div>
+                                </div>
+                                <div class="col mb-4">
+                                    <div class="h-100">
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <div class="d-flex flex-column">
+                                                <a href="#" class="heading stretched-link">تماس توسط : <span class="text-quaternary">@unRegisters.AdviserNameFamily</span> عنوان تماس : <span class="text-quaternary">@unRegisters.Subject</span></a>
+                                                <div style="margin-top: .5rem"></div>
+                                                <div class="text-alternate">@unRegisters.CallDate.ToShamsi()</div>
+                                                <div class="text-muted mt-1">
+                                                    مدت تماس : @unRegisters.CallTime
+                                                </div>
+                                                <div style="margin-top: .5rem"></div>
+                                                <a href="#" class="heading stretched-link">توضیحات</a>
+                                                <div style="margin-top: .5rem"></div>
+                                                <div class="text-alternate">@unRegisters.Description</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row g-0">
+                            <div class="col-auto sw-1 d-flex flex-column justify-content-center align-items-center position-relative me-4">
+                                <div class="w-100 d-flex sh-1 position-relative justify-content-center">
+                                    <div class="line-w-1 bg-separator h-100 position-absolute"></div>
+                                </div>
+                                <div class="rounded-xl shadow d-flex flex-shrink-0 justify-content-center align-items-center">
+                                    <div class="bg-gradient-primary sw-1 sh-1 rounded-xl position-relative"></div>
+                                </div>
+                                <div class="w-100 d-flex h-100 justify-content-center position-relative"></div>
+                            </div>
+                            <div class="col">
+                                <div class="h-100">
+                                    <div class="d-flex flex-column justify-content-start">
+                                        <div class="d-flex flex-column">
+                                            <a href="#" class="heading stretched-link">اولین تماس</a>
+                                            <div class="text-alternate">
+                                                @firstCall.CallDate.ToShamsi()
+                                            </div>
+                                            <div class="text-muted mt-1">
+
+                                                @firstCall.AdviserNameFamily
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Activity End -->
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!-- Modal Delete Student Start-->
+    <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabelDefault" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteModalLabelDefault">حذف دانش آموز</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <!-- <i data-cs-icon="close"></i> -->
+                    </button>
+                </div>
+                <div class="modal-body">
+                    آیا از حذف <span class="text-primary">@Model.Name @Model.Family</span> اطمینان دارید ؟!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-danger" onclick="DeleteStudent(@Model.StudentId)">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete Student End-->
+</main>
+
+<script>
+    $(document).ready(function() {
+
+    });
+
+    function DeleteStudent(id) {
+        $.ajax({
+            url: "/AdviserPanel/DeleteStudent/" + id,
+            type: "Get"
+        }).done(function(result) {
+            location.replace("/AdviserPanel/DeletedStudents/");
+        });
+    }
+
+</script>

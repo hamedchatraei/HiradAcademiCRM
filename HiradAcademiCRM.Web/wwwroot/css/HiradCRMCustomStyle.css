@@ -1,0 +1,34 @@
+﻿.ui-datepicker-current {
+    background-color: var(--primary) !important;
+}
+.ui-datepicker-close {
+    background-color: var(--quaternary) !important;
+}
+
+.ui-state-highlight {
+    background-color: var(--secondary) !important;
+}
+
+a.ui-state-default {
+    border-radius: 45%;
+}
+
+.ui-datepicker-prev:after {
+    content: '<';
+}
+
+.ui-datepicker-next:after {
+    content: '>';
+}
+
+a.ui-datepicker-prev{
+    width: .05rem;
+}
+
+a.ui-datepicker-next {
+    width: .05rem;
+}
+
+.ui-datepicker-month {
+    margin-left: .05rem;
+}

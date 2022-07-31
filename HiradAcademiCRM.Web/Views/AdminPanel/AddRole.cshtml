@@ -1,0 +1,146 @@
+﻿@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Permission
+@model KonkurCRM.DataLayer.Entities.User.Role
+@inject IPermissionService _permissionService
+
+@{
+    ViewData["Title"] = "افزودن نقش";
+
+    List<Permission> permissions = _permissionService.GetAllPermission();
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_SidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <form method="post" asp-action="AddRole" enctype="multipart/form-data">
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">ثبت نقش جدید</div>
+        <div class="container col-12 row">
+            <div class="col-6">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="note" class="text-muted"></i>
+                            <input class="form-control" asp-for="RoleTitle" placeholder="عنوان نقش">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h2 class="small-title">دسترسی ها</h2>
+                @foreach (var permission in permissions.Where(p => p.ParentID == null))
+                {
+                    <div class="col-12 col-xl-8 col-xxl-9 mb-5 tab-content">
+                        <!-- Permissions Tab Start -->
+                        <div class="tab-pane fade active show" id="permissionsTab" role="tabpanel">
+                            <div class="row row-cols-1 g-2">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <label class="form-check custom-icon mb-0 checked-opacity-100">
+                                                <input type="checkbox" name="selectedPermissions"  value="@permission.PermissionId" class="form-check-input">
+                                                <span class="form-check-label">
+                                                    <span class="content opacity-50">
+                                                        <span class="heading mb-1 lh-1-25">@permission.PermissionTitle</span>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Permissions Tab End -->
+                    </div>
+                    @if (permissions.Any(p => p.ParentID == permission.ParentID))
+                    {
+                        @foreach (var sub in permissions.Where(p => p.ParentID == permission.PermissionId))
+                        {
+                            <div class="col-12 col-xl-8 col-xxl-9 mb-5 tab-content" style="margin-right: 2rem">
+                                <!-- Permissions Tab Start -->
+                                <div class="tab-pane fade active show" id="permissionsTab" role="tabpanel">
+                                    <div class="row row-cols-1 g-2">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <label class="form-check custom-icon mb-0 checked-opacity-100">
+                                                        <input type="checkbox" name="selectedPermissions"  value="@sub.PermissionId" class="form-check-input">
+                                                        <span class="form-check-label">
+                                                            <span class="content opacity-50">
+                                                                <span class="heading mb-1 lh-1-25">@sub.PermissionTitle</span>
+                                                            </span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Permissions Tab End -->
+                            </div>
+                            @if (permissions.Any(p => p.ParentID == sub.ParentID))
+                            {
+                                @foreach (var sub2 in permissions.Where(p => p.ParentID == sub.PermissionId))
+                                {
+                                    <div class="col-12 col-xl-8 col-xxl-9 mb-5 tab-content" style="margin-right: 6rem">
+                                        <!-- Permissions Tab Start -->
+                                        <div class="tab-pane fade active show" id="permissionsTab" role="tabpanel">
+                                            <div class="row row-cols-1 g-2">
+                                                <div class="col">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <label class="form-check custom-icon mb-0 checked-opacity-100">
+                                                                <input type="checkbox" name="selectedPermissions"  value="@sub2.PermissionId" class="form-check-input">
+                                                                <span class="form-check-label">
+                                                                    <span class="content opacity-50">
+                                                                        <span class="heading mb-1 lh-1-25">@sub2.PermissionTitle</span>
+                                                                    </span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Permissions Tab End -->
+                                    </div>
+                                }
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </form>
+</main>
+

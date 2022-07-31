@@ -1,0 +1,90 @@
+﻿@using KonkurCRM.Core.Services.Interfaces
+@model KonkurCRM.DataLayer.Entities.Register.Register_sAdviser
+@inject IAdviserService _adviserService
+
+@{
+    ViewData["Title"] = "انتخاب مشاور";
+}
+
+<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <!-- Logo Start -->
+        <partial name="_Logo" />
+        <!-- Logo End -->
+        <!-- User Menu Start -->
+        <partial name="_SidebarUserMenu" />
+        <!-- User Menu End -->
+        <!-- Icons Menu Start -->
+        <partial name="_SidebarIconMenu" />
+        <!-- Icons Menu End -->
+        <!-- Menu Start -->
+        <partial name="_AdviserSidebarMenu" />
+        <!-- Menu End -->
+        <!-- Mobile Buttons Start -->
+        <div class="mobile-buttons-container">
+            <!-- Menu Button Start -->
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-cs-icon="menu"></i>
+            </a>
+            <!-- Menu Button End -->
+        </div>
+        <!-- Mobile Buttons End -->
+    </div>
+    <div class="nav-shadow"></div>
+</div>
+
+<main>
+    <form method="post" asp-action="ChooseAdviser">
+        <div class="col-12 col-md-5 d-flex align-items-center justify-content-start">
+            <button id="btnSave" type="submit" class="btn btn-lg btn-gradient-secondary" href="#">
+                <span>ثبت</span>
+            </button>
+        </div>
+        <div class="text-center text-large text-primary" style="margin-bottom: 2rem">انتخاب مشاور</div>
+        <div class="container col-12 row">
+            <div class="col-12">
+                <h2 class="small-title">مشخصات</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sRegister" class="form-control select2" asp-for="RegisterId" asp-items="@(ViewData["registers"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="sGroups" class="form-control select2" asp-for="AdviserTypeId" asp-items="@(ViewData["groups"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="diagram-1" class="text-muted"></i>
+                            <select id="allAdvisersForChoose" class="form-control select2" asp-for="AdviserId" asp-items="@(ViewData["allAdvisersForChoose"] as SelectList)"></select>
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input type="datetime" class="form-control" asp-for="StartDate" placeholder="تاریخ شروع">
+                        </div>
+                        <div class="mb-3 filled">
+                            <i data-cs-icon="calendar" class="text-muted"></i>
+                            <input type="datetime" class="form-control" asp-for="EndDate" placeholder="تاریخ پایان">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($) {
+        $('input[type=datetime]').datepicker({
+            dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true, changeMonth: true,
+            changeYear: true
+        });
+
+        $('#sRegister').select2();
+        $('#sGroups').select2();
+        $('#allAdvisersForChoose').select2();
+    });
+
+</script>
+

@@ -1,0 +1,328 @@
+﻿@model KonkurCRM.Core.DTOs.Plan.PlanAttributeViewModel
+
+@{
+    ViewData["Title"] = "ویژگی های طرح";
+
+    int attrId = 0;
+}
+
+<div id="root">
+    <div id="nav" class="nav-container d-flex">
+        <div class="nav-content d-flex">
+            <!-- Logo Start -->
+            <partial name="_Logo" />
+            <!-- Logo End -->
+            <!-- User Menu Start -->
+            <partial name="_SidebarUserMenu" />
+            <!-- User Menu End -->
+            <!-- Icons Menu Start -->
+            <partial name="_SidebarIconMenu" />
+            <!-- Icons Menu End -->
+            <!-- Menu Start -->
+            <partial name="_SidebarMenu" />
+            <!-- Menu End -->
+            <!-- Mobile Buttons Start -->
+            <div class="mobile-buttons-container">
+                <!-- Menu Button Start -->
+                <a href="#" id="mobileMenuButton" class="menu-button">
+                    <i data-cs-icon="menu"></i>
+                </a>
+                <!-- Menu Button End -->
+            </div>
+            <!-- Mobile Buttons End -->
+        </div>
+        <div class="nav-shadow"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <!-- Title and Top Buttons Start -->
+            <div class="page-title-container">
+                <div class="row">
+                    <!-- Title Start -->
+                    <div class="col-auto mb-3 mb-md-0 me-auto">
+                        <div class="w-auto sw-md-30">
+                            <a href="/adminpanel" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                                <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                                <span class="text-small align-middle">پیشخوان</span>
+                            </a>
+                            <h1 class="mb-0 pb-0 display-4" id="title">لیست ویژگی های طرح</h1>
+                        </div>
+                    </div>
+                    <!-- Title End -->
+                    <!-- Top Buttons Start -->
+                    <div class="w-100 d-md-none"></div>
+                    <div class="col-12 col-sm-6 col-md-auto d-flex align-items-end justify-content-end mb-2 mb-sm-0 order-sm-3">
+                        <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i data-cs-icon="plus"></i>
+                            <span>ویژگی جدید</span>
+                        </button>
+                        <div class="dropdown d-inline-block d-lg-none">
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-icon btn-icon-only ms-1"
+                                    data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i data-cs-icon="sort"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end custom-sort">
+                                <a class="dropdown-item sort" data-sort="name" href="#">Title</a>
+                                <a class="dropdown-item sort" data-sort="email" href="#">Stock</a>
+                                <a class="dropdown-item sort" data-sort="phone" href="#">Price</a>
+                                <a class="dropdown-item sort" data-sort="group" href="#">Status</a>
+                            </div>
+                        </div>
+                        <div class="btn-group ms-1 check-all-container-checkbox-click">
+                            <div class="btn btn-outline-primary btn-custom-control p-0 ps-3 pe-2" data-target="#checkboxTable">
+                                <span class="form-check float-end">
+                                    <input type="checkbox" class="form-check-input" id="checkAll" />
+                                </span>
+                            </div>
+                            <button type="button"
+                                    class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                    data-bs-offset="0,3"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"></button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <button class="dropdown-item" id="deleteChecked" type="button">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Top Buttons End -->
+                </div>
+            </div>
+            <!-- Title and Top Buttons End -->
+            <!-- Controls Start -->
+            <div class="row mb-2">
+                <!-- Search Start -->
+                <!-- Search End -->
+
+            </div>
+            <!-- Controls End -->
+            <!-- Customers List Start -->
+            <div id="tableAdvisers" class="row">
+                <div class="col-12 mb-5">
+                    <div class="card mb-2 bg-transparent no-shadow d-none d-lg-block">
+                        <div class="row g-0 sh-3">
+                            <div class="col">
+                                <div class="card-body pt-0 pb-0 h-100">
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-lg-10 d-flex align-items-center text-alternate text-medium text-muted text-small">عنوان</div>
+                                        <div class="col-6 col-lg-2 d-flex align-items-center text-alternate text-medium text-muted text-small">دستورات</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="checkboxTable" class="planAttrs-container">
+                        @foreach (var items in Model.PlanAttributes)
+                        {
+
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-lg-10 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-3 order-lg-2">
+                                            <div class="text-muted text-small d-lg-none">Name</div>
+                                            <span class="text-primary">@items.Title</span>
+                                        </div>
+                                        <div class="col-6 col-lg-2 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="row d-flex justify-content-evenly col-auto">
+                                                <button data-id="@items.PlanAttributeId" data-attrtitle="@items.Title" class="edit-attr btn btn-outline-primary btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem;padding: 0" data-bs-toggle="modal" data-bs-target="#EditPlanAttrModal">
+                                                    <i data-cs-icon="pen"></i>
+                                                </button>
+                                                <button data-id="@items.PlanAttributeId" data-attrtitle="@items.Title" class="delete-attr btn btn-outline-danger btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem;padding: 0" data-bs-toggle="modal" data-bs-target="#DeletePlanAttrModal">
+                                                    <i data-cs-icon="bin"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+
+                        <partial name="_PaginationPages" />
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Customers List End -->
+
+        </div>
+
+        <!-- Modal Add PlanAttribute Start-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabelDefault" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelDefault">افزودن ویژگی طرح</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <!-- <i data-cs-icon="close"></i> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span class="text-primary">عنوان ویژگی طرح</span> را وارد کنید
+                    </div>
+                    <div class="mb-3 filled">
+                        <i data-cs-icon="file-text" class="text-muted"></i>
+                        <textarea rows="5" class="form-control" id="txtAttrTitle" placeholder="عنوان ویژگی طرح"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-primary" onclick="AddPlanAttribute()">ثبت</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Add PlanAttribute End-->
+        <!-- Modal Edit PlanAttribute Start-->
+        <div class="modal fade" id="EditPlanAttrModal" tabindex="-1" aria-labelledby="EditPlanAttrModalLabelDefault" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="EditPlanAttrModalLabelDefault">ویرایش ویژگی طرح</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <!-- <i data-cs-icon="close"></i> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        عنوان جدیدی برای <span id="modalBodyText" class="text-primary"></span> وارد کنید
+                        <input type="hidden" id="modalReceivedId" value=""/>
+                    </div>
+                    <div class="mb-3 filled">
+                        <i data-cs-icon="file-text" class="text-muted"></i>
+                        <textarea rows="5" class="form-control" id="txtEditAttrTitle" placeholder="عنوان ویژگی طرح"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-primary" onclick="EditPlanAttribute()">ثبت</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Edit PlanAttribute End-->
+        <!-- Modal Delete PlanAttribute Start-->
+        <div class="modal fade" id="DeletePlanAttrModal" tabindex="-1" aria-labelledby="EditPlanAttrModalLabelDefault" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="DeletePlanAttrModalLabelDefault">حذف ویژگی طرح</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <!-- <i data-cs-icon="close"></i> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        آیا از حذف <span id="modalDeleteBodyText" class="text-primary"></span> اطمینان دارید ؟! اگر این ویژگی از اینجا حذف شود از تمامی طرح ها هم حذف خواهد شد!!!
+                        <input type="hidden" id="modalDeleteReceivedId" value=""/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-danger" onclick="DeletePlanAttribute()">حذف</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete PlanAttribute End-->
+    </main>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+
+        const body = $("body");
+
+        const pagination = [
+            { selector : '.pagination a#aPage', pageId : 'this' },
+            { selector : '.pagination a#aFirstPage', pageId :'1' },
+            { selector : '.pagination a#aPreviousPage', pageId : Number($('#currentPage').text()) - 1 },
+            { selector : '.pagination a#aNextPage', pageId : Number($('#currentPage').text()) + 1 },
+            { selector : '.pagination a#aLastPage', pageId :  $('#pageCount').text() }
+        ];
+
+        for (let page of pagination) {
+
+            body.on('click', page.selector, function (e) {
+
+                e.preventDefault();
+                let pageId = page.pageId === 'this' ? $(this).text() : page.pageId;
+                initAjaxFilterData(event ,pageId);
+
+            }); }
+
+        function initAjaxFilterData(event ,pageID) {
+            args = {
+                'ajax_url': "@Url.Action("PlanAttributes")",
+                'find': '.planAttrs-container',
+                'data': {
+                    
+                }
+            };
+            if (typeof pageID != 'undefined') {
+                args.data.pageId = pageID;
+            }
+
+            $(document.body).trigger('run_ajax_filter', [args]);
+        }
+
+        $(".form-control").on('input', initAjaxFilterData);
+
+        $(document).on("click", ".edit-attr", function () {
+            var attrId = $(this).data('id');
+            var attrtitle = $(this).data('attrtitle');
+            $(".modal-body #modalReceivedId").val( attrId );
+            $(".modal-body #modalBodyText").text( attrtitle );
+        });
+
+        $(document).on("click", ".delete-attr", function () {
+            var attrId = $(this).data('id');
+            var attrtitle = $(this).data('attrtitle');
+            $(".modal-body #modalDeleteReceivedId").val( attrId );
+            $(".modal-body #modalDeleteBodyText").text( attrtitle );
+        });
+    });
+
+    function AddPlanAttribute() {
+        $.ajax({
+            url: "/AdminPanel/AddPlanAttribute/",
+            data: {
+                planAttrTitle: $("#txtAttrTitle").val()
+            },
+            type: "Get"
+        }).done(function (result) {
+            location.replace("/AdminPanel/PlanAttributes/");
+        });
+    }
+
+    function EditPlanAttribute() {
+        var id = $('#modalReceivedId').val();
+        $.ajax({
+            url: "/AdminPanel/EditPlanAttribute/" + id,
+            data: {
+                id : id,
+                planAttrTitle: $("#txtEditAttrTitle").val()
+            },
+            type: "Get"
+        }).done(function (result) {
+            location.replace("/AdminPanel/PlanAttributes/");
+        });
+    }
+
+    function DeletePlanAttribute() {
+        var id = $('#modalDeleteReceivedId').val();
+        $.ajax({
+            url: "/AdminPanel/DeletePlanAttribute/" + id,
+            data: {
+                id : id
+            },
+            type: "Get"
+        }).done(function (result) {
+            location.replace("/AdminPanel/PlanAttributes/");
+        });
+    }
+</script>
+

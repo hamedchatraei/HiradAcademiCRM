@@ -1,0 +1,267 @@
+﻿@using System.Globalization
+@using KonkurCRM.Core.Convertor
+@using KonkurCRM.Core.DTOs.Adviser
+@using KonkurCRM.Core.Generator
+@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Advisers
+@inject ISettingsService _settingsService
+@inject IAdviserService _adviserService
+@model KonkurCRM.Core.DTOs.User.LoginViewModel
+
+@{
+    ViewData["Title"] = "ورود";
+    GenerateDate generate = new GenerateDate();
+    int startDay = _settingsService.GetStartDayOfMonth();
+    DateTime fromDate = generate.GetStartDayOfMonth(startDay);
+    int currentDay = generate.GetCurrentDay();
+    DateTime toDate = generate.GetEndDateOfMonth(fromDate);
+
+    DateTime today = DateTime.Now;
+    PersianCalendar persianCalendar = new PersianCalendar();
+    int yearPersian = persianCalendar.GetYear(today);
+    int monthPersian = persianCalendar.GetMonth(today);
+
+    List<InformationAdviserViewModel> advisers = _adviserService.ShowAdvisers().Where(a=>a.GroupId==2).ToList();
+
+    string monthName = "";
+
+    if (startDay == 1)
+    {
+        switch (monthPersian)
+        {
+            case 1:
+            {
+                monthName = "فروردین";
+                break;
+            }
+            case 2:
+            {
+                monthName = "اردیبهشت";
+                break;
+            }
+            case 3:
+            {
+                monthName = "خرداد";
+                break;
+            }
+            case 4:
+            {
+                monthName = "تیر";
+                break;
+            }
+            case 5:
+            {
+                monthName = "مرداد";
+                break;
+            }
+            case 6:
+            {
+                monthName = "شهریور";
+                break;
+            }
+            case 7:
+            {
+                monthName = "مهر";
+                break;
+            }
+            case 8:
+            {
+                monthName = "آبان";
+                break;
+            }
+            case 9:
+            {
+                monthName = "آذر";
+                break;
+            }
+            case 10:
+            {
+                monthName = "دی";
+                break;
+            }
+            case 11:
+            {
+                monthName = "بهمن";
+                break;
+            }
+            case 12:
+            {
+                monthName = "اسفند";
+                break;
+            }
+        }
+    }
+    else
+    {
+        switch (monthPersian)
+        {
+            case 1:
+            {
+                monthName = "اسفند و فروردین";
+                break;
+            }
+            case 2:
+            {
+                monthName = "فروردین و اردیبهشت";
+                break;
+            }
+            case 3:
+            {
+                monthName = "اردیبهشت و خرداد";
+                break;
+            }
+            case 4:
+            {
+                monthName = "خرداد و تیر";
+                break;
+            }
+            case 5:
+            {
+                monthName = "تیر و مرداد";
+                break;
+            }
+            case 6:
+            {
+                monthName = "مرداد و شهریور";
+                break;
+            }
+            case 7:
+            {
+                monthName = "شهریور و مهر";
+                break;
+            }
+            case 8:
+            {
+                monthName = "مهر و آبان";
+                break;
+            }
+            case 9:
+            {
+                monthName = "آبان و آذر";
+                break;
+            }
+            case 10:
+            {
+                monthName = "آذر و دی";
+                break;
+            }
+            case 11:
+            {
+                monthName = "دی و بهمن";
+                break;
+            }
+            case 12:
+            {
+                monthName = "بهمن و اسفند";
+                break;
+            }
+        }
+    }
+    
+
+    foreach (var adviser in advisers)
+    {
+        int adviserInvoiceAmount = _adviserService.CommissionAdviserForMonth(adviser.AdviserId);
+        int adviserInvoiceTotalAmount = 0;
+        
+        List<AdviserInvoice> adviserInvoices = _adviserService.getInvoices();
+
+        bool isAdviserExists = adviserInvoices.Any(a => a.AdviserId == adviser.AdviserId);
+        bool isCommissionAdviserExists = adviserInvoices.Any(a => a.AdviserId == adviser.AdviserId && a.PaySalaryDate.Date == DateTime.Now.Date && a.SalaryTypeId == 1);
+        
+        if (isAdviserExists)
+        {
+            AdviserInvoice adviserInv = adviserInvoices.Last(a => a.AdviserId == adviser.AdviserId);
+            adviserInvoiceTotalAmount = adviserInv.TotalAmount;
+        }
+        
+        AdviserInvoice invoice = new AdviserInvoice();
+        invoice.AdviserId = adviser.AdviserId;
+        invoice.Description = monthName + ' ' + yearPersian;
+        invoice.Amount = adviserInvoiceAmount;
+        invoice.PaySalaryDate = DateTime.Now;
+        invoice.SalaryTypeId = 1;
+
+        if (!isCommissionAdviserExists && startDay == DateTime.Now.Day)
+        {
+            _adviserService.AddInvoice(invoice);
+        }
+    }
+
+    
+}
+
+<body class="h-100" style="" data-bs-padding="0px">
+<div id="paddingModal" class="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog d-none">
+        <div class="modal-content"></div></div> </div>
+<div id="root" class="h-100 login">
+    <!-- Background Start -->
+    <div class="fixed-background"></div>
+    <!-- Background End -->
+
+    <div class="container-fluid p-0 h-100 position-relative">
+        <div class="row g-0 h-100">
+         
+            <!-- Right Side Start -->
+            <div class="col-12 col-lg-auto h-100 pb-4 px-4 pt-0 p-lg-0">
+                <div class="sw-lg-70 min-h-100 bg-foreground d-flex justify-content-center align-items-center shadow-deep py-5 full-page-content-right-border">
+                    <div class="sw-lg-50 px-5">
+                        <div class="sh-11">
+                            <a href="#">
+                                <img src="~/img/hirad.png" alt="logo" />
+                            </a>
+                        </div>
+                        <div class="mb-5 mt-5">
+                            <h2 class="cta-1 mb-0 text-primary">خوش آمدید</h2>
+                            <h2 class="cta-1 text-primary">سیستم مدیریت دانش آموزان آکادمی هیراد</h2>
+                        </div>
+                        <div class="mb-5">
+                            <p class="h6">برای ورود ، نام کاربری و کلمه عبور خود را وارد کنید</p>
+                        </div>
+                        @if (ViewBag.IsSuccess != null)
+                        {
+                            <div class="alert alert-success text-center">
+                                ورود با موفقیت انجام شد
+                            </div>
+
+                            <script>
+                                // Your delay in milliseconds
+                                var delay = 3000;
+                                setTimeout(function () { window.location = "/"; }, delay);
+                            </script>
+                        }
+
+                        @if (ViewBag.EditProfile == true)
+                        {
+                            <div class="alert alert-warning">
+                                بدلیل ویرایش پروفایل و بارگزاری مجدد اطلاعات لطفا دوباره لاگین کنید
+                            </div>
+                        }
+                        <div>
+                            <form asp-action="Login" method="post" id="loginForm" class="tooltip-end-bottom" novalidate="novalidate">
+                                <input type="hidden" asp-for="ReturnUrl" value="@ViewBag.ReturnUrl"/>
+                                <div class="mb-3 filled form-group tooltip-end-top">
+                                    <i data-cs-icon="user" class="text-muted"></i>
+                                    <input asp-for="UserName" class="form-control" placeholder="نام کاربری">
+                                </div>
+                                <span asp-validation-for="UserName"></span>
+                                <div class="mb-3 filled form-group tooltip-end-top">
+                                    <i data-cs-icon="lock" class="text-muted"></i>
+                                    <input asp-for="Password" class="form-control pe-7" name="password" type="password" placeholder="کلمه عبور">
+                                </div>
+                                <span asp-validation-for="Password"></span>
+                                <div class="remember-me">
+                                    <label class="text-white mb-2"><input asp-for="RememberMe" type="checkbox"> مرا بخاطر بسپار </label>
+                                </div>
+                                <button type="submit" class="btn btn-lg btn-primary">ورود</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side End -->
+        </div>
+    </div>
+</div>
+</body>

@@ -1,4 +1,16 @@
-﻿<div class="menu-container flex-grow-1">
+﻿@using KonkurCRM.Core.Services.Interfaces
+@using KonkurCRM.DataLayer.Entities.Advisers
+@using KonkurCRM.DataLayer.Entities.User
+@inject IUserService _userService
+@inject IAdviserService _adviserService
+@{ 
+    User user = _userService.GetUserByUserName(User.Identity.Name);
+    Adviser adviser = _adviserService.GetAdviserByUserId(user.UserId);
+
+    int adviserId = adviser.AdviserId;
+}
+
+<div class="menu-container flex-grow-1">
     <ul id="menu" class="menu">
         <li>
             <a href="/AdviserPanel">
@@ -7,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="/AdviserPanel/AdviserDetail/@adviserId">
                 <i data-cs-icon="dashboard-2" class="icon" data-cs-size="18"></i>
                 <span class="label">پروفایل من</span>
             </a>
@@ -96,7 +108,7 @@
             </a>
             <ul id="Plans">
                 <li>
-                    <a href="/AdviserPanel/Plans">
+                    <a href="/AdviserPanel/ShowPlans">
                         <span class="label">طرح ها</span>
                     </a>
                 </li>
@@ -144,7 +156,20 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>@*
+        <li>
+            <a href="#EventCalendar">
+                <i data-cs-icon="notebook-2" class="icon" data-cs-size="18"></i>
+                <span class="label">تقویم رویداد</span>
+            </a>
+            <ul id="EventCalendar">
+                <li>
+                    <a href="/AdviserPanel/Events">
+                        <span class="label">تقویم</span>
+                    </a>
+                </li>
+            </ul>
+        </li>*@
         <li>
             <a href="/Logout">
                 <i data-cs-icon="logout" class="icon" data-cs-size="18"></i>

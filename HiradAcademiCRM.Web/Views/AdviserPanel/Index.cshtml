@@ -20,8 +20,8 @@
 
     List<NotCalled> notCalleds = _callService.GetNotCalledsByAdviserId(adviserId);
 
-    List<InformationUnRegisteredFollowUpViewModel> unRegisteredFollowUp = _callService.ShowUnRegisteredFollowUp(adviserId).Where(f=>f.UnregisteredFollowUpId != 1).ToList();
-    List<InformationFollowUpViewModel> followUp = _callService.ShowFollowUp(adviserId).Where(f=>f.FollowUpId != 1).ToList();
+    List<InformationUnRegisteredFollowUpViewModel> unRegisteredFollowUp = _callService.ShowUnRegisteredFollowUp(adviserId).Where(f => f.UnregisteredFollowUpId != 1).ToList();
+    List<InformationFollowUpViewModel> followUp = _callService.ShowFollowUp(adviserId).Where(f => f.FollowUpId != 1).ToList();
     List<AllFollowUpViewModel> allFollowUps = new List<AllFollowUpViewModel>();
 
     foreach (var followUpViewModel in followUp)
@@ -67,18 +67,18 @@
     foreach (var registeredCall in registeredCalls)
     {
         AllCallsViewModel newAllCall = new AllCallsViewModel()
-        {
-            CallId = registeredCall.CallId,
-            AdviserId = registeredCall.AdviserId,
-            StudentId = registeredCall.StudentId,
-            StudentNameFamily = registeredCall.StudentNameFamily,
-            CallDate = registeredCall.CallDate,
-            CallTime = registeredCall.CallTime,
-            Subject = registeredCall.Subject,
-            Description = registeredCall.Description,
-            IsCall = registeredCall.IsCall,
-            IsRegister = true
-        };
+                {
+                    CallId = registeredCall.CallId,
+                    AdviserId = registeredCall.AdviserId,
+                    StudentId = registeredCall.StudentId,
+                    StudentNameFamily = registeredCall.StudentNameFamily,
+                    CallDate = registeredCall.CallDate,
+                    CallTime = registeredCall.CallTime,
+                    Subject = registeredCall.Subject,
+                    Description = registeredCall.Description,
+                    IsCall = registeredCall.IsCall,
+                    IsRegister = true
+                };
 
         allCalls.Add(newAllCall);
     }
@@ -86,18 +86,18 @@
     foreach (var unRegisteredCall in unRegisteredCalls)
     {
         AllCallsViewModel newAllCall = new AllCallsViewModel()
-        {
-            CallId = unRegisteredCall.UnregisteredCallsId,
-            AdviserId = unRegisteredCall.AdviserId,
-            StudentId = unRegisteredCall.StudentId,
-            StudentNameFamily = unRegisteredCall.StudentNameFamily,
-            CallDate = unRegisteredCall.CallDate,
-            CallTime = unRegisteredCall.CallTime,
-            Subject = unRegisteredCall.Subject,
-            Description = unRegisteredCall.Description,
-            IsCall = unRegisteredCall.IsCall,
-            IsRegister = false
-        };
+                {
+                    CallId = unRegisteredCall.UnregisteredCallsId,
+                    AdviserId = unRegisteredCall.AdviserId,
+                    StudentId = unRegisteredCall.StudentId,
+                    StudentNameFamily = unRegisteredCall.StudentNameFamily,
+                    CallDate = unRegisteredCall.CallDate,
+                    CallTime = unRegisteredCall.CallTime,
+                    Subject = unRegisteredCall.Subject,
+                    Description = unRegisteredCall.Description,
+                    IsCall = unRegisteredCall.IsCall,
+                    IsRegister = false
+                };
 
         allCalls.Add(newAllCall);
     }
@@ -161,9 +161,9 @@
                             </a>
                             <div class="dropdown-menu font-standard">
                                 <div class="nav flex-column" role="tablist">
-                                    <a class="active dropdown-item text-medium" href="#" aria-selected="true" role="tab">امروز</a>
-                                    <a class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">هفتگی</a>
-                                    <a class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">ماهانه</a>
+                                    <a id="TodayStats" class="active dropdown-item text-medium" href="#" aria-selected="true" role="tab">امروز</a>
+                                    <a id="ThisWeekStats" class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">هفتگی</a>
+                                    <a id="ThisMonthStats" class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">ماهانه</a>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,9 @@
                                             <i data-cs-icon="user" class="text-primary"></i>
                                         </div>
                                         <div class="mb-1 d-flex align-items-center text-alternate text-small lh-1-25">دانش آموزان</div>
-                                        <div class="text-primary cta-4">17</div>
+                                        <div id="TodayStudent" class="text-primary cta-4">1</div>
+                                        <div id="ThisWeekStudent" class="text-primary cta-4">7</div>
+                                        <div id="ThisMonthStudent" class="text-primary cta-4">30</div>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +190,9 @@
                                             <i data-cs-icon="dollar" class="text-primary"></i>
                                         </div>
                                         <div class="mb-1 d-flex align-items-center text-alternate text-small lh-1-25">واریزی</div>
-                                        <div class="text-primary cta-4">$ 315.20</div>
+                                        <div id="TodayCash" class="text-primary cta-4">$ 1</div>
+                                        <div id="ThisWeekCash" class="text-primary cta-4">$ 7</div>
+                                        <div id="ThisMonthCash" class="text-primary cta-4">$ 30</div>
                                     </div>
                                 </div>
                             </div>
@@ -196,14 +200,14 @@
                                 <div class="card h-100 hover-scale-up cursor-pointer">
                                     <div class="card-body d-flex flex-column align-items-center">
                                         <div class="sw-6 sh-6 rounded-xl d-flex justify-content-center align-items-center border border-primary mb-4">
-                                            <i data-cs-icon="arrow-top-left" class="text-primary"></i>
+                                            <i data-cs-icon="phone" class="text-primary"></i>
                                         </div>
-                                        <div class="mb-1 d-flex align-items-center text-alternate text-small lh-1-25">انصرافی</div>
+                                        <div class="mb-1 d-flex align-items-center text-alternate text-small lh-1-25">تماس ها</div>
                                         <div class="text-primary cta-4">2</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-4 col-lg-2">
+                            @*<div class="col-6 col-md-4 col-lg-2">
                                 <div class="card h-100 hover-scale-up cursor-pointer">
                                     <div class="card-body d-flex flex-column align-items-center">
                                         <div class="sw-6 sh-6 rounded-xl d-flex justify-content-center align-items-center border border-primary mb-4">
@@ -235,15 +239,15 @@
                                         <div class="text-primary cta-4">5</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Stats End -->
 
-        <div class="row">
-        <!-- FollowUps Start -->
+            <div class="row">
+                <!-- FollowUps Start -->
                 <div class="col-xl-12 mb-5">
                     <h2 class="small-title">پیگیری های امروز</h2>
                     <div class="mb-n2 scroll-out">
@@ -271,95 +275,95 @@
                             </div>
                             @foreach (var item in allFollowUps)
                             {
-                                <div class="card mb-2 sh-15 sh-md-6">
-                                    <div class="card-body pt-0 pb-0 h-100">
-                                        <div class="row g-0 h-100 align-content-center">
-                                            <div class="col-10 col-md-2 d-flex align-items-center mb-3 mb-md-0 h-md-100">
+                                            <div class="card mb-2 sh-15 sh-md-6">
+                                                <div class="card-body pt-0 pb-0 h-100">
+                                                    <div class="row g-0 h-100 align-content-center">
+                                                        <div class="col-10 col-md-2 d-flex align-items-center mb-3 mb-md-0 h-md-100">
                                                 @if (item.IsRegister)
                                                 {
-                                                    <a href="/AdviserPanel/StudentDetail/@item.StudentId/1" class="body-link stretched-link">@item.StudentNameFamily</a>
+                                                                            <a href="/AdviserPanel/StudentDetail/@item.StudentId/1" class="body-link stretched-link">@item.StudentNameFamily</a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="/AdviserPanel/UnRegisteredStudentDetail/@item.StudentId" class="body-link stretched-link">@item.StudentNameFamily</a>
+                                                                            <a href="/AdviserPanel/UnRegisteredStudentDetail/@item.StudentId" class="body-link stretched-link">@item.StudentNameFamily</a>
                                                 }
-                                            </div>
-                                            <div class="col-10 col-md-2 d-flex align-items-center mb-3 mb-md-0 h-md-100">
-                                                <span>@item.FollowUpDateTime.ToShamsi()</span>
-                                            </div>
-                                            <div class="col-10 col-md-3 d-flex align-items-center mb-3 mb-md-0 h-md-100">
-                                                <span>@item.Subject</span>
-                                            </div>
-                                            <div class="col-10 col-md-3 d-flex align-items-center mb-3 mb-md-0 h-md-100">
-                                                <span>@item.Description</span>
-                                            </div>
-                                            <div class="icon-center col-12 col-md-2 d-flex align-items-center justify-content-md-end mb-1 mb-md-0 text-alternate">
+                                                        </div>
+                                                        <div class="col-10 col-md-2 d-flex align-items-center mb-3 mb-md-0 h-md-100">
+                                                            <span>@item.FollowUpDateTime.ToShamsi()</span>
+                                                        </div>
+                                                        <div class="col-10 col-md-3 d-flex align-items-center mb-3 mb-md-0 h-md-100">
+                                                            <span>@item.Subject</span>
+                                                        </div>
+                                                        <div class="col-10 col-md-3 d-flex align-items-center mb-3 mb-md-0 h-md-100">
+                                                            <span>@item.Description</span>
+                                                        </div>
+                                                        <div class="icon-center col-12 col-md-2 d-flex align-items-center justify-content-md-end mb-1 mb-md-0 text-alternate">
                                                 @if (item.IsRegister)
                                                 {
-                                                    <a href="/AdviserPanel/AddRegisteredCall/@item.StudentId/1" class="call-student btn btn-outline-success btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0; margin-left: 1rem">
-                                                        <i data-cs-icon="phone"></i>
-                                                    </a>
-                                                    <a href="/AdviserPanel/AddRegisteredCall/@item.StudentId/0" class="message-student btn btn-outline-primary btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0">
-                                                        <i data-cs-icon="email"></i>
-                                                    </a>
+                                                                            <a href="/AdviserPanel/AddRegisteredCall/@item.StudentId/1" class="call-student btn btn-outline-success btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0; margin-left: 1rem">
+                                                                                <i data-cs-icon="phone"></i>
+                                                                            </a>
+                                                                            <a href="/AdviserPanel/AddRegisteredCall/@item.StudentId/0" class="message-student btn btn-outline-primary btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0">
+                                                                                <i data-cs-icon="email"></i>
+                                                                            </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="/AdviserPanel/AddUnRegisteredCall/@item.StudentId/1" class="call-student btn btn-outline-success btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0; margin-left: 1rem">
-                                                        <i data-cs-icon="phone"></i>
-                                                    </a>
-                                                    <a href="/AdviserPanel/AddUnRegisteredCall/@item.StudentId/0" class="message-student btn btn-outline-primary btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0">
-                                                        <i data-cs-icon="email"></i>
-                                                    </a>
+                                                                            <a href="/AdviserPanel/AddUnRegisteredCall/@item.StudentId/1" class="call-student btn btn-outline-success btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0; margin-left: 1rem">
+                                                                                <i data-cs-icon="phone"></i>
+                                                                            </a>
+                                                                            <a href="/AdviserPanel/AddUnRegisteredCall/@item.StudentId/0" class="message-student btn btn-outline-primary btn-icon" style="border-radius: 50%; width: 2.5rem; height: 2.5rem; padding: 0">
+                                                                                <i data-cs-icon="email"></i>
+                                                                            </a>
                                                 }
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
                             }
                         </div>
                     </div>
                 </div>
                 <!-- FollowUps End -->
-        <!-- Performance Start -->
-        <div class="col-xl-6 mb-5">
-            <div class="d-flex">
-                <h2 class="small-title">کارایی</h2>
-                <div class="dropdown-as-select me-3" data-setActive="false" data-childSelector="span">
-                    <a style="font-size: 18px" class="pe-0 pt-0 align-top lh-1 dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                       aria-expanded="false" aria-haspopup="true">
-                        <span class="small-title"></span>
-                    </a>
-                    <div class="dropdown-menu font-standard">
-                        <div class="nav flex-column" role="tablist">
-                            <a class="active dropdown-item text-medium" href="#" aria-selected="true" role="tab">امروز</a>
-                            <a class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">هفتگی</a>
-                            <a class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">ماهانه</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card sh-45 h-xl-100-card">
-                <div class="card-body h-100">
-                    <div class="h-100">
-                        <canvas id="horizontalTooltipChart"></canvas>
-                        <div class="custom-tooltip position-absolute bg-foreground rounded-md border border-separator pe-none p-3 d-flex z-index-1 align-items-center opacity-0 basic-transform-transition">
-                            <div class="icon-container border d-flex align-middle align-items-center justify-content-center align-self-center rounded-xl sh-5 sw-5 rounded-xl me-3">
-                                <span class="icon"></span>
-                            </div>
-                            <div>
-                                <span class="text d-flex align-middle text-alternate align-items-center text-small">واریزی</span>
-                                <span class="value d-flex align-middle text-body align-items-center cta-4">300</span>
+                <!-- Performance Start -->
+                @*<div class="col-xl-6 mb-5">
+                    <div class="d-flex">
+                        <h2 class="small-title">کارایی</h2>
+                        <div class="dropdown-as-select me-3" data-setActive="false" data-childSelector="span">
+                            <a style="font-size: 18px" class="pe-0 pt-0 align-top lh-1 dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                               aria-expanded="false" aria-haspopup="true">
+                                <span class="small-title"></span>
+                            </a>
+                            <div class="dropdown-menu font-standard">
+                                <div class="nav flex-column" role="tablist">
+                                    <a class="active dropdown-item text-medium" href="#" aria-selected="true" role="tab">امروز</a>
+                                    <a class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">هفتگی</a>
+                                    <a class="dropdown-item text-medium" href="#" aria-selected="false" role="tab">ماهانه</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="card sh-45 h-xl-100-card">
+                        <div class="card-body h-100">
+                            <div class="h-100">
+                                <canvas id="horizontalTooltipChart"></canvas>
+                                <div class="custom-tooltip position-absolute bg-foreground rounded-md border border-separator pe-none p-3 d-flex z-index-1 align-items-center opacity-0 basic-transform-transition">
+                                    <div class="icon-container border d-flex align-middle align-items-center justify-content-center align-self-center rounded-xl sh-5 sw-5 rounded-xl me-3">
+                                        <span class="icon"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text d-flex align-middle text-alternate align-items-center text-small">واریزی</span>
+                                        <span class="value d-flex align-middle text-body align-items-center cta-4">300</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                <!-- Performance End -->
             </div>
-        </div>
-        <!-- Performance End -->
-        </div>
 
-            <div class="row">
+            @*<div class="row">
                 <div class="col-12 col-xxl">
                     <div class="row">
                         <!-- Activity Start -->
@@ -852,7 +856,7 @@
                     </div>
                 </div>
                 <!-- Tips End -->
-            </div>
+            </div>*@
 
             <div class="row gx-4 gy-5">
                 <!-- Top Selling Items Start -->
@@ -862,49 +866,63 @@
                         <div class="scroll-by-count" data-count="4">
                             @foreach (var item in allCalls)
                             {
-                                <div class="card mb-2">
-                                    <div class="row g-0 sh-14 sh-md-10">
-                                        <div class="col">
-                                            <div class="card-body pt-0 pb-0 h-100">
-                                                <div class="row g-0 h-100 align-content-center">
+                                            <div class="card mb-2">
+                                                <div class="row g-0 sh-14 sh-md-10">
+                                                    <div class="col">
+                                                        <div class="card-body pt-0 pb-0 h-100">
+                                                            <div class="row g-0 h-100 align-content-center">
                                                     @if (item.IsRegister)
                                                     {
-                                                        <div class="col-12 col-md-2 d-flex align-items-center mb-2 mb-md-0">
-                                                            <a href="/AdviserPanel/StudentDetail/@item.StudentId/1">@item.StudentNameFamily</a>
-                                                        </div>
+                                                                                <div class="col-12 col-md-2 d-flex align-items-center mb-2 mb-md-0">
+                                                                                    <a href="/AdviserPanel/StudentDetail/@item.StudentId/1">@item.StudentNameFamily</a>
+                                                                                </div>
                                                     }
                                                     else
                                                     {
-                                                        <div class="col-12 col-md-2 d-flex align-items-center mb-2 mb-md-0">
-                                                            <a href="/AdviserPanel/UnRegisteredStudentDetail/@item.StudentId">@item.StudentNameFamily</a>
-                                                        </div>
+                                                                                <div class="col-12 col-md-2 d-flex align-items-center mb-2 mb-md-0">
+                                                                                    <a href="/AdviserPanel/UnRegisteredStudentDetail/@item.StudentId">@item.StudentNameFamily</a>
+                                                                                </div>
                                                     }
-                                                    <div class="col-12 col-md-2 d-flex align-items-center text-muted text-medium">@item.CallDate.ToShamsi()</div>
-                                                    <div class="col-12 col-md-4 d-flex align-items-center text-muted text-medium">@item.Subject</div>
-                                                    <div class="col-12 col-md-4 d-flex align-items-center text-muted text-medium">@item.Description</div>
+                                                                <div class="col-12 col-md-2 d-flex align-items-center text-muted text-medium">@item.CallDate.ToShamsi()</div>
+                                                                <div class="col-12 col-md-4 d-flex align-items-center text-muted text-medium">@item.Subject</div>
+                                                                <div class="col-12 col-md-4 d-flex align-items-center text-muted text-medium">@item.Description</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
                             }
                         </div>
                     </div>
                 </div>
                 <!-- Top Selling Items End -->
                 <!-- Not Called Numbers Start -->
+
+
                 <div class="col-xl-6">
-                    <h2 class="small-title">شماره های تماس گرفته نشده</h2>
-                    <div class="card sh-35 h-xl-100-card">
-                        <div class="card-body scroll-out h-100">
-                            <div class="scroll h-100">
-                                @foreach (var item in notCalleds)
-                                {
+    <h2 class="small-title">شماره های تماس گرفته نشده</h2>
+    <div class="card sh-35 h-xl-100-card">
+        <div class="card-body scroll-out h-100">
+            <div
+                class="scroll h-100 os-host os-theme-dark os-host-rtl os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-overflow os-host-overflow-y os-host-transition">
+                <div class="os-resize-observer-host observed">
+                    <div class="os-resize-observer" style="left: auto; right: 0px;"></div>
+                </div>
+                <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: right;">
+                    <div class="os-resize-observer"></div>
+                </div>
+                <div class="os-content-glue" style="margin: 0px -15px; width: 803px; height: 215px;"></div>
+                <div class="os-padding">
+                    <div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;">
+                        <div class="os-content" style="padding: 0px 15px; height: 100%; width: 100%;">
+
+                                            @foreach (var item in notCalleds)
+                                            {
                                     <div class="d-flex flex-row align-items-center justify-content-between mb-2">
-                                        <div class="d-flex flex-column">
+                                        <div class="">
                                             <div>@item.Number</div>
                                         </div>
-                                        <div class="d-flex flex-column text-muted">
+                                        <div class="text-muted">
                                             <div>@item.AddDate.ToShamsi()</div>
                                         </div>
                                         <div class="d-flex icon-center">
@@ -916,11 +934,26 @@
                                             </a>
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                            }
+
                         </div>
                     </div>
                 </div>
+                <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
+                    <div class="os-scrollbar-track os-scrollbar-track-off">
+                        <div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px);"></div>
+                    </div>
+                </div>
+                <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden">
+                    <div class="os-scrollbar-track os-scrollbar-track-off">
+                        <div class="os-scrollbar-handle" style="height: 74.4828%; transform: translate(0px);"></div>
+                    </div>
+                </div>
+                <div class="os-scrollbar-corner"></div>
+            </div>
+        </div>
+    </div>
+</div>
                 <!-- Not Called Numbers End -->
             </div>
         </div>
@@ -930,6 +963,55 @@
 <script>
     jQuery(document).ready(function($) {
 
+        const TodayStats = $('#TodayStats');
+        const ThisWeekStats = $('#ThisWeekStats');
+        const ThisMonthStats = $('#ThisMonthStats');
+        const TodayStudent = $('#TodayStudent');
+        const ThisWeekStudent = $('#ThisWeekStudent');
+        const ThisMonthStudent = $('#ThisMonthStudent');
+        const TodayCash = $('#TodayCash');
+        const ThisWeekCash = $('#ThisWeekCash');
+        const ThisMonthCash = $('#ThisMonthCash');
+
+        $(window).on('load',
+            function() {
+                TodayStudent.show();
+                ThisWeekStudent.hide();
+                ThisMonthStudent.hide();
+                TodayCash.show();
+                ThisWeekCash.hide();
+                ThisMonthCash.hide();
+            });
+
+        TodayStats.on('click',
+            function() {
+                TodayStudent.show();
+                ThisWeekStudent.hide();
+                ThisMonthStudent.hide();
+                TodayCash.show();
+                ThisWeekCash.hide();
+                ThisMonthCash.hide();
+            });
+
+        ThisWeekStats.on('click',
+            function() {
+                TodayStudent.hide();
+                ThisWeekStudent.show();
+                ThisMonthStudent.hide();
+                TodayCash.hide();
+                ThisWeekCash.show();
+                ThisMonthCash.hide();
+            });
+
+        ThisMonthStats.on('click',
+            function() {
+                TodayStudent.hide();
+                ThisWeekStudent.hide();
+                ThisMonthStudent.show();
+                TodayCash.hide();
+                ThisWeekCash.hide();
+                ThisMonthCash.show();
+            });
 
     })
 </script>

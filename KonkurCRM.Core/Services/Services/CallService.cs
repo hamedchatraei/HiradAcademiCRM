@@ -506,6 +506,8 @@ namespace KonkurCRM.Core.Services.Services
             editNotCalled.Number = notCalled.Number;
             editNotCalled.AdviserId = notCalled.AdviserId;
             editNotCalled.AddDate = notCalled.AddDate;
+            editNotCalled.IsDedicated=notCalled.IsDedicated;
+            editNotCalled.NotCalledId=notCalled.NotCalledId;
 
             UpdateNotCalled(editNotCalled);
         }

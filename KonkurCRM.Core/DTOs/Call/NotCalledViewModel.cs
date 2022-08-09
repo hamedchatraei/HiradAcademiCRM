@@ -34,4 +34,10 @@ namespace KonkurCRM.Core.DTOs.Call
 
         public bool IsDedicated { get; set; }
     }
+
+    public class ListIdsAndNumbersViewModel
+    {
+        public int Id { get; set; }
+        public string Number { get; set; }
+    }
 }

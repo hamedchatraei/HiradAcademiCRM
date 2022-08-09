@@ -1,0 +1,179 @@
+﻿@using KonkurCRM.Core.Convertor
+@model KonkurCRM.Core.DTOs.Plan.PlanViewModel
+
+@{
+    ViewData["Title"] = "طرح ها";
+}
+
+<div id="root">
+    <div id="nav" class="nav-container d-flex">
+        <div class="nav-content d-flex">
+            <!-- Logo Start -->
+            <partial name="_Logo" />
+            <!-- Logo End -->
+            <!-- User Menu Start -->
+            <partial name="_SidebarUserMenu" />
+            <!-- User Menu End -->
+            <!-- Icons Menu Start -->
+            <partial name="_SidebarIconMenu" />
+            <!-- Icons Menu End -->
+            <!-- Menu Start -->
+            <partial name="_AdviserSidebarMenu" />
+            <!-- Menu End -->
+            <!-- Mobile Buttons Start -->
+            <div class="mobile-buttons-container">
+                <!-- Menu Button Start -->
+                <a href="#" id="mobileMenuButton" class="menu-button">
+                    <i data-cs-icon="menu"></i>
+                </a>
+                <!-- Menu Button End -->
+            </div>
+            <!-- Mobile Buttons End -->
+        </div>
+        <div class="nav-shadow"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <!-- Title and Top Buttons Start -->
+            <div class="page-title-container">
+                <div class="row">
+                    <!-- Title Start -->
+                    <div class="col-auto mb-3 mb-md-0 me-auto">
+                        <div class="w-auto sw-md-30">
+                            <a href="/AdviserPanel" class="muted-link pb-1 d-inline-block breadcrumb-back">
+                                <i data-cs-icon="chevron-left" data-cs-size="13"></i>
+                                <span class="text-small align-middle">پیشخوان</span>
+                            </a>
+                            <h1 class="mb-0 pb-0 display-4" id="title">لیست طرح ها</h1>
+                        </div>
+                    </div>
+                    <!-- Title End -->
+                </div>
+            </div>
+            <!-- Title and Top Buttons End -->
+            <!-- Controls Start -->
+            <div class="row mb-2">
+                <!-- Search Start -->
+                <div class="col-sm-12 col-md-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+                        <input type="text" class="form-control" id="txtTitle" placeholder="عنوان طرح" />
+                        <span class="search-magnifier-icon">
+                            <i data-cs-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-cs-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Search End -->
+
+            </div>
+            <!-- Controls End -->
+            <!-- Customers List Start -->
+            <div id="tableAdvisers" class="row">
+                <div class="col-12 mb-5">
+                    <div class="card mb-2 bg-transparent no-shadow d-none d-lg-block">
+                        <div class="row g-0 sh-3">
+                            <div class="col">
+                                <div class="card-body pt-0 pb-0 h-100">
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-lg-3 d-flex align-items-center text-alternate text-medium text-muted text-small">عنوان طرح</div>
+                                        <div class="col-6 col-lg-3 d-flex align-items-center text-alternate text-medium text-muted text-small">هزینه طرح</div>
+                                        <div class="col-6 col-lg-3 d-flex align-items-center text-alternate text-medium text-muted text-small">مدت زمان طرح</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="checkboxTable" class="plan-container">
+                        @foreach (var items in Model.Plans)
+                        {
+
+                            <div class="card mb-2">
+                                <div class="card-body pt-0 pb-0 sh-30 sh-lg-8">
+
+                                    <div class="row g-0 h-100 align-content-center">
+                                        <div class="col-6 col-lg-3 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-3 order-lg-2">
+                                            <div class="text-muted text-small d-lg-none">Name</div>
+                                            <a href="/adminPanel/PlanDetail/@items.PlanId">@items.PlanTitle</a>
+                                        </div>
+                                        <div class="col-6 col-lg-3 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <div class="text-alternate">
+                                                @items.Amount.ToRial()
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-lg-3 d-flex flex-column justify-content-center mb-2 mb-lg-0 order-5 order-lg-3">
+                                            <div class="text-muted text-small d-lg-none"></div>
+                                            <div class="text-alternate">
+                                                @items.Length ماه
+                                            </div>
+                                        </div>
+                                        <div class="col-1 col-lg-1 d-flex flex-column justify-content-center align-items-lg-end mb-2 mb-lg-0 order-2 text-end order-lg-last">
+                                            <label class="form-check float-end pe-none mt-1">
+                                                <input type="checkbox" class="form-check-input" />
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <!-- Pagination Start -->
+                        
+                        <partial name="_PaginationPages"/>
+
+                        <!-- Pagination End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Customers List End -->
+
+        </div>
+    </main>
+</div>
+
+<script>
+    jQuery(document).ready(function($) {
+
+        const body = $("body");
+
+        const pagination = [
+            { selector : '.pagination a#aPage', pageId : 'this' },
+            { selector : '.pagination a#aFirstPage', pageId :'1' },
+            { selector : '.pagination a#aPreviousPage', pageId : Number($('#currentPage').text()) - 1 },
+            { selector : '.pagination a#aNextPage', pageId : Number($('#currentPage').text()) + 1 },
+            { selector : '.pagination a#aLastPage', pageId :  $('#pageCount').text() }
+        ];
+
+        for (let page of pagination) {
+
+            body.on('click', page.selector, function (e) {
+
+                e.preventDefault();
+                let pageId = page.pageId === 'this' ? $(this).text() : page.pageId;
+                initAjaxFilterData(event ,pageId);
+
+            }); }
+
+        function initAjaxFilterData(event ,pageID) {
+            args = {
+                'ajax_url': "@Url.Action("ShowPlans")",
+                'find': '.plan-container',
+                'data': {
+                    'planTitle': $('#txtTitle').val()
+                },
+            };
+            if (typeof pageID != 'undefined') {
+                args.data.pageId = pageID;
+            }
+
+            $(document.body).trigger('run_ajax_filter', [args]); }
+
+        $(".form-control").on('input', initAjaxFilterData);
+
+    });
+</script>
+

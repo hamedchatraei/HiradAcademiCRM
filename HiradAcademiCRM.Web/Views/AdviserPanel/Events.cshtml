@@ -2,3 +2,236 @@
     ViewData["Title"] = "Events";
 }
 
+<div id="root">
+    <div id="nav" class="nav-container d-flex">
+        <div class="nav-content d-flex">
+            <!-- Logo Start -->
+            <partial name="_Logo" />
+            <!-- Logo End -->
+            <!-- User Menu Start -->
+            <partial name="_SidebarUserMenu" />
+            <!-- User Menu End -->
+            <!-- Icons Menu Start -->
+            <partial name="_SidebarIconMenu" />
+            <!-- Icons Menu End -->
+            <!-- Menu Start -->
+            <partial name="_AdviserSidebarMenu" />
+            <!-- Menu End -->
+            <!-- Mobile Buttons Start -->
+            <div class="mobile-buttons-container">
+                <!-- Menu Button Start -->
+                <a href="#" id="mobileMenuButton" class="menu-button">
+                    <i data-cs-icon="menu"></i>
+                </a>
+                <!-- Menu Button End -->
+            </div>
+            <!-- Mobile Buttons End -->
+        </div>
+        <div class="nav-shadow"></div>
+    </div>
+    <main class="event-calendar-body">
+
+        <div id='calendar'></div>
+
+        <div class="d-none">
+            <form id="addEventModal">
+                <div class="mb-3">
+                    <label class="form-label">عنوان رویداد</label>
+                    <input type="text" class="form-control e-title">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">تاریخ شروع</label>
+                    <input type="datetime" class="form-control e-start-date">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">تاریخ پایان</label>
+                    <input type="datetime" class="form-control e-end-date">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ساعت شروع</label>
+                    <input type="text" class="form-control time e-start-time" data-precision="1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ساعت پایان</label>
+                    <input type="text" class="form-control time e-end-time" data-precision="1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea placeholder="" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</div>
+
+<script>
+
+    jQuery(document).ready(function($) {
+
+        JalaliDate = {
+            g_days_in_month: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+            j_days_in_month: [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29]
+        };
+
+        JalaliDate.jalaliToGregorian = function(j_y, j_m, j_d) {
+            j_y = parseInt(j_y);
+            j_m = parseInt(j_m);
+            j_d = parseInt(j_d);
+            var jy = j_y - 979;
+            var jm = j_m - 1;
+            var jd = j_d - 1;
+
+            var j_day_no = 365 * jy + parseInt(jy / 33) * 8 + parseInt((jy % 33 + 3) / 4);
+            for (var i = 0; i < jm; ++i) j_day_no += JalaliDate.j_days_in_month[i];
+
+            j_day_no += jd;
+
+            var g_day_no = j_day_no + 79;
+
+            var gy = 1600 + 400 * parseInt(g_day_no / 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+            g_day_no = g_day_no % 146097;
+
+            var leap = true;
+            if (g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
+            {
+                g_day_no--;
+                gy += 100 * parseInt(g_day_no / 36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+                g_day_no = g_day_no % 36524;
+
+                if (g_day_no >= 365) g_day_no++;
+                else leap = false;
+            }
+
+            gy += 4 * parseInt(g_day_no / 1461); /* 1461 = 365*4 + 4/4 */
+            g_day_no %= 1461;
+
+            if (g_day_no >= 366) {
+                leap = false;
+
+                g_day_no--;
+                gy += parseInt(g_day_no / 365);
+                g_day_no = g_day_no % 365;
+            }
+
+            for (var i = 0; g_day_no >= JalaliDate.g_days_in_month[i] + (i == 1 && leap); i++)
+                g_day_no -= JalaliDate.g_days_in_month[i] + (i == 1 && leap);
+            var gm = i + 1;
+            var gd = g_day_no + 1;
+
+            gm = gm < 10 ? "0" + gm : gm;
+            gd = gd < 10 ? "0" + gd : gd;
+
+            return [gy, gm, gd];
+        }
+
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+
+            locale: 'fa',
+            direction: 'rtl',
+            firstDay: 6,
+            buttonText: {
+                today: 'امروز',
+                month: 'ماه',
+                week: 'هفته',
+                day: 'روز',
+            },
+
+
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            initialDate: Date.now(),
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectMirror: true,
+            select: function(arg) {
+
+                var addEvntHtml = document.getElementById('addEventModal');
+
+                Swal.fire({
+                    title: 'اضافه کردن رویداد',
+                    html: addEvntHtml.outerHTML,
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        eTitle = $('.swal2-popup .e-title').val();
+                        eStartDate = $('.swal2-popup .e-start-date').val();
+                        eEndDate = $('.swal2-popup .e-end-date').val();
+                        eStartTime = $('.swal2-popup .e-start-time').val();
+                        eEndTime = $('.swal2-popup .e-end-time').val();
+
+                        
+                        dateSplitted = eStartDate.split("/"),
+                        jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+                        miladiStartDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+
+                        dateSplitted = eEndDate.split("/"),
+                        jD = JalaliDate.jalaliToGregorian(dateSplitted[0], dateSplitted[1], dateSplitted[2]);
+                        miladiEndDate = jD[0] + "-" + jD[1] + "-" + jD[2];
+                        
+
+
+                        calendar.addEvent({
+                            title: eTitle,
+                            start: miladiStartDate,
+                            end: miladiEndDate,
+                            startTime:eStartTime,
+                            allDay: arg.allDay
+                        });
+
+                    },
+                    didRender: () => {
+
+                        $('input[type=datetime]').datepicker({
+                            dateFormat: "yy/mm/dd", isRTL: true, showButtonPanel: true, changeMonth: true,
+                            changeYear: true
+                        });
+
+                        $('.time').clockTimePicker({}
+                        );
+
+                    }
+                });
+
+
+                calendar.unselect();
+            },
+            eventClick: function(arg) {
+                Swal.fire({
+                    title: 'از حذف این رویداد اطمینان دارید؟!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'انصراف',
+                    confirmButtonText: 'بله ، حذف شود!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'حذف شد!',
+                            'رویداد شما حذف شد :(',
+                            'success',
+                            arg.event.remove()
+                        );
+                    }
+                });
+            },
+            editable: true,
+            dayMaxEvents: true, // allow "more" link when too many events
+            eventResizableFromStart: true,
+            eventDurationEditable: true,
+            eventResourceEditable: true,
+            events: [
+
+            ]
+        });
+
+        calendar.render();
+
+    });
+
+</script>

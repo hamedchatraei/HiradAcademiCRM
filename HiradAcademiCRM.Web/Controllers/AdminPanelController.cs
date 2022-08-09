@@ -905,16 +905,28 @@ namespace HiradAcademiCRM.Web.Controllers
         }
 
 
-        public IActionResult DedicateNumberToAdviser(List<InformationNotCalledViewModel> info,int adviserId)
+        public IActionResult DedicateNumberToAdviser(List<int> ids,List<string> nums,int adviserId)
         {
-            foreach (var item in info)
+            List<ListIdsAndNumbersViewModel> list = new List<ListIdsAndNumbersViewModel>();
+
+            for (int i = 0; i < ids.Count; i++)
+            {
+                ListIdsAndNumbersViewModel a = new ListIdsAndNumbersViewModel();
+
+                a.Id = ids[i];
+                a.Number=nums[i];
+
+                list.Add(a);
+            }
+
+            foreach (var item in list)
             {
                 NotCalled notCalled = new NotCalled()
                 {
                     AdviserId = adviserId,
                     Number = item.Number,
-                    AddDate = item.AddDate,
-                    NotCalledId = item.NotCalledId,
+                    AddDate = DateTime.Now,
+                    NotCalledId = item.Id,
                     IsDedicated = true
                 };
 

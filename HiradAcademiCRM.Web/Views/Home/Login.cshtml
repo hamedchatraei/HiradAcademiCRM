@@ -20,6 +20,7 @@
     PersianCalendar persianCalendar = new PersianCalendar();
     int yearPersian = persianCalendar.GetYear(today);
     int monthPersian = persianCalendar.GetMonth(today);
+    int dayPersian = persianCalendar.GetDayOfMonth(today);
 
     List<InformationAdviserViewModel> advisers = _adviserService.ShowAdvisers().Where(a=>a.GroupId==2).ToList();
 
@@ -182,7 +183,7 @@
         invoice.PaySalaryDate = DateTime.Now;
         invoice.SalaryTypeId = 1;
 
-        if (!isCommissionAdviserExists && startDay == DateTime.Now.Day)
+        if (!isCommissionAdviserExists && startDay == dayPersian)
         {
             _adviserService.AddInvoice(invoice);
         }

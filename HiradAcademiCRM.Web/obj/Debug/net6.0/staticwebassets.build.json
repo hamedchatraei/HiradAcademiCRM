@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wQ/Nq69W3LYn5HYu5pwR/whV4rHs0dXtPxX/Sj+mPgM=",
+  "Hash": "rqUBluLQny/2rtPKdiQ2ML/DjSJPsUvO7p/QOuqtPUU=",
   "Source": "HiradAcademiCRM.Web",
   "BasePath": "_content/HiradAcademiCRM.Web",
   "Mode": "Default",
@@ -134,6 +134,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\_functions.scss"
+    },
+    {
+      "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\css\\EventCalendarMain.css",
+      "SourceId": "HiradAcademiCRM.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\",
+      "BasePath": "_content/HiradAcademiCRM.Web",
+      "RelativePath": "css/EventCalendarMain.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\EventCalendarMain.css"
     },
     {
       "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\css\\HiradCRMCustomStyle.css",
@@ -4029,6 +4046,40 @@
       "OriginalItemSpec": "wwwroot\\js\\cs\\wizard.js"
     },
     {
+      "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\js\\EventCalendarFa.js",
+      "SourceId": "HiradAcademiCRM.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\",
+      "BasePath": "_content/HiradAcademiCRM.Web",
+      "RelativePath": "js/EventCalendarFa.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\EventCalendarFa.js"
+    },
+    {
+      "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\js\\EventCalendarMain.js",
+      "SourceId": "HiradAcademiCRM.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\",
+      "BasePath": "_content/HiradAcademiCRM.Web",
+      "RelativePath": "js/EventCalendarMain.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\EventCalendarMain.js"
+    },
+    {
       "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\js\\forms\\controls.autocomplete.js",
       "SourceId": "HiradAcademiCRM.Web",
       "SourceType": "Discovered",
@@ -4299,6 +4350,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\jquery\\jquery.js"
+    },
+    {
+      "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\js\\jquery-clock-timepicker.min.js",
+      "SourceId": "HiradAcademiCRM.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\",
+      "BasePath": "_content/HiradAcademiCRM.Web",
+      "RelativePath": "js/jquery-clock-timepicker.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jquery-clock-timepicker.min.js"
     },
     {
       "Identity": "C:\\Users\\Phoenix\\Desktop\\HiradAcademiCRM\\HiradAcademiCRM.Web\\wwwroot\\js\\pages\\customers.detail.js",

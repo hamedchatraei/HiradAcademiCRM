@@ -15,8 +15,8 @@
     Adviser adviser = _adviserService.GetAdviserByUserId(user.UserId);
     int adviserId = adviser.AdviserId;
 
-    List<InformationUnRegisteredFollowUpViewModel> unRegisteredFollowUp = _callService.ShowUnRegisteredFollowUp(adviserId).Where(f=>f.UnregisteredFollowUpId != 1).ToList();
-    List<InformationFollowUpViewModel> followUp = _callService.ShowFollowUp(adviserId).Where(f=>f.FollowUpId != 1).ToList();
+    List<InformationUnRegisteredFollowUpViewModel> unRegisteredFollowUp = _callService.ShowUnRegisteredFollowUp(adviserId).Where(f => f.UnregisteredFollowUpId != 1).ToList();
+    List<InformationFollowUpViewModel> followUp = _callService.ShowFollowUp(adviserId).Where(f => f.FollowUpId != 1).ToList();
     List<AllFollowUpViewModel> allFollowUps = new List<AllFollowUpViewModel>();
 
     foreach (var followUpViewModel in followUp)
@@ -53,63 +53,69 @@
         allFollowUps.Add(newAllFollowUps);
     }
 
-    allFollowUps = allFollowUps.Where(a => a.IsFollowedUp == false && a.FollowUpDateTime.Date >= DateTime.Now.Date && a.FollowUpDateTime.Date <= DateTime.Now.AddDays(2).Date).OrderBy(a=>a.FollowUpDateTime).ToList();
+    allFollowUps = allFollowUps.Where(a => a.IsFollowedUp == false && a.FollowUpDateTime.Date >= DateTime.Now.Date && a.FollowUpDateTime.Date <= DateTime.Now.AddDays(2).Date).OrderBy(a => a.FollowUpDateTime).ToList();
 
     List<InformationInstallmentViewModel> infoInstallment = _PayService.ShowInstallments().Where(i => i.AdviserId == adviserId && i.InstallmentDate.Date >= DateTime.Now.Date && i.InstallmentDate.Date <= DateTime.Now.AddDays(2).Date && i.IsPayed == false).ToList();
 }
 <ul class="list-unstyled list-inline text-center menu-icons">
-                <li class="list-inline-item">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#searchPagesModal">
-                        <i data-cs-icon="search" data-cs-size="18"></i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#" id="pinButton" class="pin-button">
-                        <i data-cs-icon="lock-on" class="unpin" data-cs-size="18"></i>
-                        <i data-cs-icon="lock-off" class="pin" data-cs-size="18"></i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#" id="colorButton">
-                        <i data-cs-icon="light-on" class="light" data-cs-size="18"></i>
-                        <i data-cs-icon="light-off" class="dark" data-cs-size="18"></i>
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true"
-                       aria-expanded="false" class="notification-button">
-                        <div class="position-relative d-inline-flex">
-                            <i data-cs-icon="bell" data-cs-size="18"></i>
-                            <span class="position-absolute notification-dot rounded-xl"></span>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
-                        <div class="scroll">
-                            <ul class="list-unstyled border-last-none">
-                                @foreach (var item in allFollowUps)
-                                {
-                                    <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                        <div class="align-self-center">
-                                            <div class="text-center">پیگیری تماس</div>
-                                            <div>@item.StudentNameFamily</div>
-                                            <div>@item.FollowUpDateTime.ToShamsi()</div>
-                                            <div>@item.Subject</div>
-                                        </div>
-                                    </li>
-                                }
-                                @foreach (var item in infoInstallment)
-                                {
-                                    <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                        <div class="align-self-center">
-                                            <div class="text-center">یادآوری قسط</div>
-                                            <div>@item.StudentNameFamily</div>
-                                            <div>@item.InstallmentDate.ToShamsi()</div>
-                                            <div>@item.Amount.ToRial()</div>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+    <li class="list-inline-item">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#searchPagesModal">
+            <i data-cs-icon="search" data-cs-size="18"></i>
+        </a>
+    </li>
+    <li class="list-inline-item">
+        <a href="#" id="pinButton" class="pin-button">
+            <i data-cs-icon="lock-on" class="unpin" data-cs-size="18"></i>
+            <i data-cs-icon="lock-off" class="pin" data-cs-size="18"></i>
+        </a>
+    </li>
+    <li class="list-inline-item">
+        <a href="#" id="colorButton">
+            <i data-cs-icon="light-on" class="light" data-cs-size="18"></i>
+            <i data-cs-icon="light-off" class="dark" data-cs-size="18"></i>
+        </a>
+    </li>
+    <li class="list-inline-item">
+        <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true"
+           aria-expanded="false" class="notification-button">
+            <div class="position-relative d-inline-flex">
+                <i data-cs-icon="bell" data-cs-size="18"></i>
+                @if (allFollowUps.Count != 0 && infoInstallment.Count != 0)
+                {
+                    <span class="position-absolute notification-dot rounded-xl"></span>
+                }
+            </div>
+        </a>
+        @if (allFollowUps.Count != 0 && infoInstallment.Count != 0)
+        {
+            <div class="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
+                <div class="scroll">
+                    <ul class="list-unstyled border-last-none">
+                        @foreach (var item in allFollowUps)
+                        {
+                            <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
+                                <div class="align-self-center">
+                                    <div class="text-center">پیگیری تماس</div>
+                                    <div>@item.StudentNameFamily</div>
+                                    <div>@item.FollowUpDateTime.ToShamsi()</div>
+                                    <div>@item.Subject</div>
+                                </div>
+                            </li>
+                        }
+                        @foreach (var item in infoInstallment)
+                        {
+                            <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
+                                <div class="align-self-center">
+                                    <div class="text-center">یادآوری قسط</div>
+                                    <div>@item.StudentNameFamily</div>
+                                    <div>@item.InstallmentDate.ToShamsi()</div>
+                                    <div>@item.Amount.ToRial()</div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </li>
+</ul>

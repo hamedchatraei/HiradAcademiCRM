@@ -2,6 +2,7 @@
 using KonkurCRM.Core.DTOs.Adviser;
 using KonkurCRM.Core.DTOs.Call;
 using KonkurCRM.Core.DTOs.Pay;
+using KonkurCRM.Core.DTOs.Plan;
 using KonkurCRM.Core.DTOs.Register;
 using KonkurCRM.Core.DTOs.Student;
 using KonkurCRM.Core.Services.Interfaces;
@@ -1435,6 +1436,17 @@ namespace HiradAcademiCRM.Web.Controllers
         public IActionResult Events()
         {
             return View();
+        }
+
+        #endregion
+
+        #region Plans
+
+        public IActionResult ShowPlans(int pageId = 1, string planTitle = "")
+        {
+            PlanViewModel plan = _planService.GetPlans(pageId, planTitle);
+
+            return View(plan);
         }
 
         #endregion
